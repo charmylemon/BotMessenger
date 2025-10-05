@@ -1,5 +1,5 @@
   const coinsup = 5000 //thay số coins được nhận khi đoán trúng
-const coinsdown = 3000 //thay số coins bị mất khi yêu cầu gợi ý
+const coinsdown = 2000 //thay số coins bị mất khi yêu cầu gợi ý
 const timeUnsend = 1 //thời gian thu hồi tin nhắn sau khi trả lời đúng trong thời gian timeUnsend
 const axios = global.nodemodule["axios"];
 module.exports.config = {

@@ -1,50 +1,78 @@
+const axios = require("axios");
+const fs = require("fs-extra");
+const FormData = require("form-data");
 const imgur = require("imgur");
-const fs = require("fs");
-const { downloadFile } = require("../../utils/index");
 
 module.exports.config = {
   name: "imgur",
-  version: "1.0.0",
+  version: "1.2.0",
   hasPermssion: 0,
-  credits: "mod",
-  description: "Imgur",
+  credits: "ChatGPT (Imgur + Postimages fallback)",
+  description: "Upload ảnh hoặc video lên Imgur, nếu lỗi thì chuyển sang Postimages",
   commandCategory: "Công cụ",
-  usages: "[reply]",
+  usages: "[reply ảnh hoặc video]",
   cooldowns: 5
-}; 
+};
 
 module.exports.run = async ({ api, event }) => {
   const { threadID, type, messageReply, messageID } = event;
   const ClientID = "f20bdcf02b2f89e";
-  if (type !== "message_reply" || messageReply.attachments.length == 0) return api.sendMessage("Bạn phải reply một video, ảnh nào đó", threadID, messageID);
   imgur.setClientId(ClientID);
-  const attachmentSend = [];
-  async function getAttachments(attachments) {
-    let startFile = 0;
-    for (const data of attachments) {
-      const ext = data.type == "photo" ? "jpg" :
-        data.type == "video" ? "mp4" :
-          data.type == "audio" ? "m4a" :
-            data.type == "animated_image" ? "gif" : "txt";
-      const pathSave = __dirname + `/cache/${startFile}.${ext}`
-      ++startFile;
-      const url = data.url;
-      await downloadFile(url, pathSave);
-      attachmentSend.push(pathSave);
-    }
-  }
-  await getAttachments(messageReply.attachments);
-  let msg = "", Succes = 0, Error = [];
-  for (const getImage of attachmentSend) {
+
+  if (type !== "message_reply" || !messageReply.attachments?.length)
+    return api.sendMessage("⚠️ Hãy reply vào **1 ảnh hoặc video** để upload!", threadID, messageID);
+
+  const links = [];
+
+  for (const att of messageReply.attachments) {
+    const type = att.type;
+    if (!["photo", "animated_image", "video"].includes(type)) continue;
+
+    const ext = type === "photo" ? "jpg" : type === "video" ? "mp4" : "gif";
+    const path = __dirname + `/cache/${Date.now()}.${ext}`;
+
     try {
-      const getLink = await imgur.uploadFile(getImage)
-      console.log(getLink);
-      msg += `${getLink.link}\n`
-      fs.unlinkSync(getImage)
-    } catch {
-      Error.push(getImage);
-      fs.unlinkSync(getImage)
+      // tải file tạm
+      const res = await axios.get(att.url, { responseType: "arraybuffer" });
+      fs.writeFileSync(path, res.data);
+
+      // --- Upload lên Imgur ---
+      try {
+        const uploaded = await imgur.uploadFile(path);
+        if (uploaded?.link) {
+          links.push(uploaded.link);
+          fs.unlinkSync(path);
+          continue;
+        }
+      } catch (err) {
+        console.log("⚠️ Imgur lỗi, chuyển sang Postimages:", err.message);
+      }
+
+      // --- Upload fallback qua Postimages ---
+      const form = new FormData();
+      form.append("file", fs.createReadStream(path));
+      form.append("format", "json");
+      const uploadPost = await axios.post("https://api.postimages.org/1/upload", form, {
+        headers: form.getHeaders()
+      });
+
+      fs.unlinkSync(path);
+
+      if (uploadPost.data?.data?.direct_link) {
+        links.push(uploadPost.data.data.direct_link);
+      } else {
+        links.push("❌ Upload thất bại!");
+      }
+
+    } catch (err) {
+      console.error("❌ Upload toàn phần lỗi:", err.message);
+      if (fs.existsSync(path)) fs.unlinkSync(path);
+      links.push("❌ Upload thất bại!");
     }
   }
-  return api.sendMessage(`${msg}`, threadID);
-}
+
+  if (links.length === 0)
+    return api.sendMessage("❌ Upload thất bại hoàn toàn!", threadID, messageID);
+  else
+    return api.sendMessage(links.join("\n"), threadID, messageID);
+};

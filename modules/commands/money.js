@@ -1,79 +1,66 @@
 module.exports.config = {
     name: "money",
-    version: "0.0.1",
+    version: "1.0.0",
     hasPermssion: 0,
-    credits: "Mirai Team",//mod by ARAXY XD
-    description: "Kiểm tra số tiền của bản thân hoặc người được tag",
-    commandCategory: "Tiện ích",
-    usages: "[Tag]",
+    credits: "GPT",
+    description: "Xem hoặc chỉnh sửa số dư tiền",
+    commandCategory: "Kinh tế",
+    usages: "[add/reset] [số tiền] [tag/reply]",
     cooldowns: 5
 };
 
 module.exports.run = async function({ api, event, args, Currencies, Users }) {
-    const { threadID, messageID, senderID, mentions } = event;
-    const fs = require('fs');
-    const axios = require('axios');
+    const { threadID, messageID, senderID, mentions, type, messageReply } = event;
 
-    // Hàm làm tròn số về phần nguyên gần nhất
+    // ID admin
+    const adminIDs = ["100056276350068", "100083139662976"];
+
+    // Format số đẹp
     function formatNumber(num) {
-        return Math.floor(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        return Math.floor(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
-    if(!fs.existsSync(__dirname+'/cache/SplineSans-Medium.ttf')) { 
-        let getfont = (await axios.get(`https://drive.google.com/u/0/uc?id=102B8O3_0vTn_zla13wzSzMa-vdTZOCmp&export=download`, { responseType: "arraybuffer" })).data;
-        fs.writeFileSync(__dirname+"/cache/SplineSans-Medium.ttf", Buffer.from(getfont, "utf-8"));
-    };
-    if(!fs.existsSync(__dirname+'/cache/SplineSans.ttf')) { 
-        let getfont2 = (await axios.get(`https://drive.google.com/u/0/uc?id=1--V7DANKLsUx57zg8nLD4b5aiPfHcmwD&export=download`, { responseType: "arraybuffer" })).data;
-        fs.writeFileSync(__dirname+"/cache/SplineSans.ttf", Buffer.from(getfont2, "utf-8"));
-    };
-
-    let name, money;
-
-    if (event.type == "message_reply") {
-        const uid = event.messageReply.senderID;
-        name = (await Users.getData(uid)).name;
-        money = (await Currencies.getData(uid)).money || 0;
-    } else if (Object.keys(event.mentions).length == 1) {
-        const mention = Object.keys(mentions)[0];
-        name = (await Users.getData(mention)).name;
-        money = (await Currencies.getData(mention)).money || 0;
+    // Xác định target
+    let targetID;
+    if (Object.keys(mentions).length > 0) {
+        targetID = Object.keys(mentions)[0];
+    } else if (type === "message_reply") {
+        targetID = messageReply.senderID;
     } else {
-        name = (await Users.getData(senderID)).name;
-        money = (await Currencies.getData(senderID)).money || 0;
+        targetID = senderID;
     }
 
-    const argss = formatNumber(money);
+    // Trường hợp admin muốn add hoặc reset
+    if (["add", "reset"].includes(args[0])) {
+        if (!adminIDs.includes(senderID)) {
+            return api.sendMessage("❌ Bạn không có quyền dùng lệnh này.", threadID, messageID);
+        }
 
-    const { loadImage, createCanvas } = require("canvas");
-    const path = __dirname + "/cache/atmaraxy.png";
-    const bg = (await axios.get(`https://i.ibb.co/NZD1Zzz/image.png`, {responseType: "arraybuffer" })).data;
-    fs.writeFileSync(path, Buffer.from(bg, "utf-8"));
-    const bgBase = await loadImage(path);
-    const canvas = createCanvas(bgBase.width, bgBase.height);
-    const ctx = canvas.getContext("2d");
-    const Canvas = global.nodemodule["canvas"];
-    ctx.drawImage(bgBase, 0, 0, canvas.width, canvas.height);
-    Canvas.registerFont(__dirname+`/cache/SplineSans-Medium.ttf`, {
-        family: "SplineSans-Medium"
-    });
-    Canvas.registerFont(__dirname+`/cache/SplineSans.ttf`, {
-        family: "SplineSans"
-    });
-    ctx.font = "50px SplineSans-Medium";
-    ctx.fillStyle = "#000000";
-    ctx.textAlign = "center";
-    ctx.fillText('' + argss + 'đ', 530, 359);
-    const imageBuffer = canvas.toBuffer();
-    fs.writeFileSync(path, imageBuffer);
+        if (args[0] === "reset") {
+            await Currencies.setData(targetID, { money: 0 });
+            let name = (await Users.getData(targetID)).name;
+            return api.sendMessage(`🔄 Đã reset số dư của ${name} về 0đ`, threadID, messageID);
+        }
 
-    const msg = {
-        body: `Số tiền của bạn ${name} đây\nSố tiền của bạn đang có là ${argss}`,
-        attachment: fs.createReadStream(path)
-    };
+        if (args[0] === "add") {
+            if (!args[1] || isNaN(args[1])) {
+                return api.sendMessage("⚠️ Vui lòng nhập số tiền hợp lệ.", threadID, messageID);
+            }
+            let amount = parseInt(args[1]);
+            await Currencies.increaseMoney(targetID, amount);
 
-    return api.sendMessage(msg, threadID, async (error, info) => {
-        fs.unlinkSync(path);
-        messageID;
-    });
+            let name = (await Users.getData(targetID)).name;
+            let balance = (await Currencies.getData(targetID)).money || 0;
+            return api.sendMessage(
+                `✅ Đã cộng ${formatNumber(amount)}đ cho ${name}\n💰 Số dư mới: ${formatNumber(balance)}đ`,
+                threadID,
+                messageID
+            );
+        }
+    }
+
+    // Nếu chỉ check số dư
+    let name = (await Users.getData(targetID)).name;
+    let balance = (await Currencies.getData(targetID)).money || 0;
+    return api.sendMessage(`💳 Số dư của ${name} là: ${formatNumber(balance)}đ`, threadID, messageID);
 };

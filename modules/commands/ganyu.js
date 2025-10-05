@@ -6,7 +6,7 @@ module.exports.config = {
   description: "Random ảnh ganyu",
   commandCategory: "Random-img",
   usages: "ganyu",
-  cooldowns: 5,
+  cooldowns: 30,
   dependencies: {
     "request":"",
     "fs-extra":"",

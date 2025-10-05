@@ -10,7 +10,7 @@ module.exports.config = {
 module.exports.run = async ({ api, event, args, Users }) => {
   const { threadID, messageID, participantIDs, isGroup } = event;
   const num = parseInt(args[0]) || 1;
-  if(isGroup == false) return api.sendMessage('→ Vui lòng thực hiện lệnh này ở nhóm!', threadID, messageID);
+  if(isGroup == false) return api.sendMessage('→ 𝐕𝐮𝐢 𝐥𝐨̀𝐧𝐠 𝐭𝐡𝐮̛̣𝐜 𝐡𝐢𝐞̣̂𝐧 𝐥𝐞̣̂𝐧𝐡 𝐧𝐚̀𝐲 𝐨̛̉ 𝐧𝐡𝐨́𝐦!', threadID, messageID);
   const random = participantIDs.sort(function() {
         return .5 - Math.random();
     });
@@ -19,5 +19,5 @@ module.exports.run = async ({ api, event, args, Users }) => {
       var name = (await Users.getData(random[i])).name;
       members.push(name)
     }
-  return api.sendMessage(`→ Người may mắn là: ${members.join(' ')}`, threadID, messageID);
+  return api.sendMessage(`→ Người được chọn là: ${members.join(' ')}`, threadID, messageID);
 }

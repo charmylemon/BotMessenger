@@ -6,7 +6,7 @@ module.exports.config = {
   description: "Tìm mọi thông tin cần biêt thông qua Wikipedia",
   commandCategory: "Tiện ích",
   usages: "[en] [thông tin cần tìm kiếm]",
-  cooldowns: 1,
+  cooldowns: 5,
   dependencies: {
         "wikijs": ""
     }

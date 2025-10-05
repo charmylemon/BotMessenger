@@ -6,7 +6,7 @@ module.exports.config = {
   description: "Random ảnh ayaka",
   commandCategory: "Random-img",
   usages: "ayaka",
-  cooldowns: 5,
+  cooldowns: 20,
   dependencies: {
     "request":"",
     "fs-extra":"",

@@ -13,9 +13,9 @@ module.exports.languages = {
     "vi": {
         "missingInput": "[ SLOT ] Số tiền đặt cược không được để trống hoặc là số âm",
         "moneyBetNotEnough": "[ SLOT ] Số tiền bạn đặt lớn hơn hoặc bằng số dư của bạn!",
-        "limitBet": "[ SLOT ] Số coin đặt không được dưới 50 BAO!",
-        "returnWin": "🎰 %1 | %2 | %3 🎰\nBạn đã thắng với %4 BAO",
-        "returnLose": "🎰 %1 | %2 | %3 🎰\nBạn đã thua và mất %4 BAO"
+        "limitBet": "[ SLOT ] Số coin đặt không được dưới 50$!",
+        "returnWin": "🎰 %1 | %2 | %3 🎰\nBạn đã thắng với %4$",
+        "returnLose": "🎰 %1 | %2 | %3 🎰\nBạn đã thua và mất %4$"
     },
     "en": {
         "missingInput": "[ SLOT ] The bet money must not be blank or a negative number",

@@ -1,10 +1,10 @@
 module.exports.config = {
     name: "speedtest",
     version: "1.0.0",
-    hasPermssion: 0,
+    hasPermssion: 3,
     credits: "Mirai Team",
-    description: "Kiểm tra tốc độ mạng",
-    commandCategory: "Công cụ",
+    description: "Kiểm tra tốc độ mạng(bot)",
+    commandCategory: "Hệ Thống",
     cooldowns: 15,
     dependencies: {
     "fast-speedtest-api": ""

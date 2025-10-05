@@ -3,12 +3,12 @@ module.exports.config = {
   version: "1.0.2",
   hasPermssion: 0,
   credits: "Mirai Team",
-  description: "Nhận 500 coins mỗi ngày!",
+  description: "Nhận 10000 coins mỗi ngày!",
   commandCategory: "Tiện ích",
     cooldowns: 5,
     envConfig: {
         cooldownTime: 43200000,
-        rewardCoin: 500
+        rewardCoin: 10000
     }
 };
 

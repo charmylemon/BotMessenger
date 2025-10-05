@@ -131,7 +131,7 @@ function move(x, y, data) {
   var playerMove = [x, y];
   if (checkAvailableSpot(playerMove, availablePoint)) {
     placeMove({point: playerMove, player: 2, data});
-  } else return "Ô này đã được đánh dấu rồi!";
+  } else return "Ô này đã được đánh dấu!";
   solveAIMove({depth: 0, turn: 1, data});
   placeMove({point: AIMove, player: 1, data});
 }
@@ -161,9 +161,8 @@ module.exports.handleReply = async function({ event, api, handleReply }) {
     var temp = move(row, col, data);
     var lmao = "";
     if(checkGameOver(data)) {
-      var gayban = ["gà 😎", "non 😎", "tuổi gì 😎", "hơi non 😎", "gà vcl 😎", "easy game 😎"];
-      if(checkAIWon(data)) lmao = `You lose! ${gayban[Math.floor(Math.random() * gayban.length)]}`;
-      else if(checkPlayerWon(data)) lmao = "You win! :<";
+      if(checkAIWon(data)) lmao = `You lose!`;
+      else if(checkPlayerWon(data)) lmao = "You win!";
       else lmao = "Hòa rồi!";
       global.moduleData.tictactoe.delete(threadID);
     }

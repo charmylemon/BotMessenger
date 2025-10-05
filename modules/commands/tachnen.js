@@ -22,7 +22,7 @@ module.exports.run = async function({
     api, event, args
 }){
     try {
-      var tpk = `🖼️=== [ 𝗧𝗔́𝗖𝗛 𝗕𝗔𝗖𝗞𝗚𝗥𝗢𝗨𝗡𝗗 ] ===🖼️
+      var tpk = `🖼️=== [ 𝗧𝗔́𝗖𝗛 𝐍𝐄̂̀𝐍 ] ===🖼️
 ━━━━━━━━━━━━━━━
 ➜ 𝗧𝗮́𝗰𝗵 𝘁𝗵𝗮̀𝗻𝗵 𝗰𝗼̂𝗻𝗴 𝗻𝗲̂̀𝗻 𝗰𝘂̉𝗮 𝗮̉𝗻𝗵 𝗯𝗮̣𝗻 𝘃𝘂̛̀𝗮 𝗿𝗲𝗽𝗹𝘆`;
         if (event.type !== "message_reply") return api.sendMessage("➜ Bạn phải reply một ảnh nào đó", event.threadID, event.messageID);

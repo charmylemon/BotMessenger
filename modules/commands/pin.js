@@ -1,117 +1,55 @@
-const axios = require("axios");
-const regExMatchPinterest = /(https:\/\/(www.)?(pinterest.com|pin.it)[^ \n]*)/g;
-
 module.exports.config = {
-  name: "pin",
-  version: "2.0.0",
-  hasPermssion: 0,
-  credits: "NTKhang",
-  description: "Tải video hoặc tìm kiếm ảnh trên pinterest",
-  commandCategory: "Công cụ",
-  usages: "down {url}\n-pinterest search {keyword}",
-  cooldowns: 0
-};
-module.exports.onLoad = () => {
-    const fs = require("fs-extra");
-    const request = require("request");
-    const dirMaterial = __dirname + `/noprefix/`;
-    if (!fs.existsSync(dirMaterial + "noprefix")) fs.mkdirSync(dirMaterial, { recursive: true });
-    if (!fs.existsSync(dirMaterial + "pinterest.jpg")) request("https://i.imgur.com/KJ8ozPz.jpg").pipe(fs.createWriteStream(dirMaterial + "pinterest.jpg"));
-}
-module.exports.run = async function ({ api, event, args }) {
-  const p = global.config.PREFIX;
-  const fs = require("fs");
-  const short = require("tinyurl").shorten;
-  const t = module.exports.config.name;
-  const targetBody = event.messageReply ? event.messageReply.body : event.body;
-  if (args[0] == "down") {
-    var data = require("qs").stringify({
-      'url': args[1]
-    });
-    const o = {
-      method: 'POST',
-      url: 'https://www.expertsphp.com/twitter-video-downloader.php',
-      headers: {
-        'User-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 Edg/105.0.1343.33'
-      },
-      data
-    };
-
-    const res = await axios(o);
-    const newData = res.data;
-    const link = newData.split('<td><a href="')[1].split('"')[0];
-    const t = (await axios.get(link, {
-      responseType: "stream"
-    })).data;
-    return api.sendMessage({
-      body: "Url: " + await short(link),
-      attachment: t
-    }, event.threadID)
+    name: "pin",
+    version: "0.0.1",
+    hasPermssion: 0,
+    credits: "meow",
+    description: "Pinterest",
+    commandCategory: "Tiện ích",
+    usages: "pin text - number",
+    cooldowns: 0
+  };
+  module.exports.run = async function({ api, event, args }) {
+      const axios = require("axios");
+      const fs = require("fs-extra");
+      const request = require("request");
+      const name = args.join(" ").trim().replace(/\s+/g, " ").replace(/(\s+\|)/g, "|").replace(/\|\s+/g, "|").split("-")[0];
+      const number = args.join(" ").trim().replace(/\s+/g, " ").replace(/(\s+\|)/g, "|").replace(/\|\s+/g, "|").split("-")[1] || 6;
+      if(!name || !number ){ return api.sendMessage("Missing Data", event.threadID)}
+      var headers = {
+          'authority': 'www.pinterest.com',
+          'cache-control': 'max-age=0',
+          'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+          'upgrade-insecure-requests': '1',
+          'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36',
+          'sec-gpc': '1',
+          'sec-fetch-site': 'same-origin',
+          'sec-fetch-mode': 'same-origin',
+          'sec-fetch-dest': 'empty',
+          'accept-language': 'en-US,en;q=0.9',
+          'cookie': 'csrftoken=92c7c57416496066c4cd5a47a2448e28; g_state={"i_l":0}; _auth=1; _pinterest_sess=TWc9PSZBMEhrWHJZbHhCVW1OSzE1MW0zSkVid1o4Uk1laXRzdmNwYll3eEFQV0lDSGNRaDBPTGNNUk5JQTBhczFOM0ZJZ1ZJbEpQYlIyUmFkNzlBV2kyaDRiWTI4THFVUWhpNUpRYjR4M2dxblJCRFhESlBIaGMwbjFQWFc2NHRtL3RUcTZna1c3K0VjVTgyejFDa1VqdXQ2ZEQ3NG91L1JTRHZwZHNIcDZraEp1L0lCbkJWUytvRis2ckdrVlNTVytzOFp3ZlpTdWtCOURnbGc3SHhQOWJPTzArY3BhMVEwOTZDVzg5VDQ3S1NxYXZGUEEwOTZBR21LNC9VZXRFTkErYmtIOW9OOEU3ektvY3ZhU0hZWVcxS0VXT3dTaFpVWXNuOHhiQWdZdS9vY24wMnRvdjBGYWo4SDY3MEYwSEtBV2JxYisxMVVsV01McmpKY0VOQ3NYSUt2ZDJaWld6T0RacUd6WktITkRpZzRCaWlCTjRtVXNMcGZaNG9QcC80Ty9ZZWFjZkVGNURNZWVoNTY4elMyd2wySWhtdWFvS2dQcktqMmVUYmlNODBxT29XRWx5dWZSc1FDY0ZONlZJdE9yUGY5L0p3M1JXYkRTUDAralduQ2xxR3VTZzBveUc2Ykx3VW5CQ0FQeVo5VE8wTEVmamhwWkxwMy9SaTNlRUpoQmNQaHREbjMxRlRrOWtwTVI5MXl6cmN1K2NOTFNyU1cyMjREN1ZFSHpHY0ZCR1RocWRjVFZVWG9VcVpwbXNGdlptVzRUSkNadVc1TnlBTVNGQmFmUmtrNHNkVEhXZytLQjNUTURlZXBUMG9GZ3YwQnVNcERDak16Nlp0Tk13dmNsWG82U2xIKyt5WFhSMm1QUktYYmhYSDNhWnB3RWxTUUttQklEeGpCdE4wQlNNOVRzRXE2NkVjUDFKcndvUzNMM2pMT2dGM05WalV2QStmMC9iT055djFsYVBKZjRFTkRtMGZZcWFYSEYvNFJrYTZSbVRGOXVISER1blA5L2psdURIbkFxcTZLT3RGeGswSnRHdGNpN29KdGFlWUxtdHNpSjNXQVorTjR2NGVTZWkwPSZzd3cwOXZNV3VpZlprR0VBempKdjZqS00ybWM9; _b="AV+pPg4VpvlGtL+qN4q0j+vNT7JhUErvp+4TyMybo+d7CIZ9QFohXDj6+jQlg9uD6Zc="; _routing_id="d5da9818-8ce2-4424-ad1e-d55dfe1b9aed"; sessionFunnelEventLogged=1'
+      };
+  
+      var options = {
+          url: 'https://www.pinterest.com/search/pins/?q=' + (encodeURIComponent(name)) + '&rs=typed&term_meta[]=' + (encodeURIComponent(name)) + '%7Ctyped',
+          headers: headers
+      };
+    async function callback(error, response, body) {
+          const imgabc = [];
+          if (!error && response.statusCode == 200) {
+              const arrMatch = body.match(/https:\/\/i\.pinimg\.com\/originals\/[^.]+\.jpg/g);
+  for(let i = 0; i < number; i++){
+    const t = await axios.get(`${arrMatch[i]}`, {
+          responseType: "stream"
+        })
+    const o = t.data
+    imgabc.push(o)
   }
-  else if (args[0] == "search") {
-    try {
-      let keyword = event.messageReply ? event.messageReply.body : args.slice(1).join(" ");
-      let limit = null;
-
-      if (!isNaN(args[args.length - 1])) {
-        limit = parseInt(args[args.length - 1]);
-        if (limit > 50)
-          return api.sendMessage("𝗕𝗮̣𝗻 𝗰𝗵𝗶̉ 𝗰𝗼́ 𝘁𝗵𝗲̂̉ 𝘁𝗮̉𝗶 𝗻𝗵𝗶𝗲̂̀𝘂 𝗻𝗵𝗮̂́𝘁 𝟱𝟬 𝗮̉𝗻𝗵", event.threadID, event.messageID);
-        keyword = event.messageReply ? keyword : keyword.replace(/(\d+)$/, "").trim();
+            var msg = ({
+        body: `► 𝗣𝗜𝗡𝗧𝗘𝗥𝗘𝗦𝗧\n\n${name} - ${number}`,
+        attachment: imgabc
+       })
+      return api.sendMessage(msg, event.threadID, event.messageID)
+          }
       }
-
-      if (!keyword)
-        return api.sendMessage('𝗩𝘂𝗶 𝗹𝗼̀𝗻𝗴 𝗻𝗵𝗮̣̂𝗽 𝘁𝘂̛̀ 𝗸𝗵𝗼𝗮́ 𝘁𝗶̀𝗺 𝗸𝗶𝗲̂́𝗺 🔎', event.threadID, event.messageID);
-
-      const url = `https://apiuwuapi.ducdz999.repl.co/pinterest?search=${encodeURIComponent(keyword)}`;
-      const { data } = await axios.get(url);
-      let results = data.data;
-      if (data.length == 0)
-        return api.sendMessage(`𝗞𝗵𝗼̂𝗻𝗴 𝗰𝗼́ 𝗸𝗲̂́𝘁 𝗾𝘂𝗮̉ 𝘁𝗶́𝗺 𝗸𝗶𝗲̂́𝗺 𝗻𝗮̀𝗼 𝗰𝗵𝗼 𝘁𝘂̛̀ 𝗸𝗵𝗼́𝗮: ${keyword}`, event.threadID, event.messageID);
-
-      if (limit)
-        results = results.slice(0, limit);
-
-      let getAll = await Promise.allSettled(results.map(url => axios.get(url, { responseType: "stream" })
-        .then(({ data: result }) => {
-          const pathDefault = result.path;
-          result.path = pathDefault ? pathDefault : global.utils.randomString(10) + ".png";
-          return result;
-        })
-        .catch(e => {
-          throw e;
-        })
-      ));
-
-      getAll = getAll.filter(e => e.status == "fulfilled").map(e => e.value).slice(0, 50);
-
-      return api.sendMessage({
-        body: `🌸=== [ 𝗣𝗜𝗡𝗧𝗘𝗥𝗘𝗦𝗧 ] ===🌸\n━━━━━━━━━━━━━\n\n𝗖𝗼́ ${getAll.length} 𝗸𝗲̂́𝘁 𝗾𝘂𝗮̉ 𝘁𝗶̀𝗺 𝗸𝗶𝗲̂́𝗺 𝗮̉𝗻𝗵 𝘁𝗿𝗲̂𝗻 𝗽𝗶𝗻𝘁𝗲𝗿𝗲𝘀𝘁 𝗰𝘂̉𝗮 𝘁𝘂̛̀ 𝗸𝗵𝗼𝗮́ ${keyword} 🌸\n` + (limit && limit > getAll.length ? `Đã xảy ra lỗi khi tải ${limit - getAll.length} ảnh` : ""),
-        attachment: getAll
-      }, event.threadID, event.messageID);
-    }
-    catch (e) {
-      console.log(e);
-      return api.sendMessage("Đã có lỗi xảy ra", event.threadID, event.messageID);
-    }
-  }
-  else {
-    return api.sendMessage({body:`🌸==『 𝗣𝗜𝗡𝗧𝗘𝗥𝗘𝗦𝗧 』==🌸\n\n→ 𝗕𝗮̣𝗻 𝗰𝗼́ 𝘁𝗵𝗲̂̉ 𝗱𝘂̀𝗻𝗴 𝗻𝗵𝘂̛̃𝗻𝗴 𝗰𝗵𝘂̛́𝗰 𝗻𝗮̆𝗻𝗴 𝘀𝗮𝘂:\n🔎 ${p}𝗽𝗶𝗻 𝘀𝗲𝗮𝗿𝗰𝗵: 𝗧𝘂̛̀ 𝗸𝗵𝗼𝗮́ 𝘁𝗶̀𝗺 𝗸𝗶𝗲̂́𝗺 - 𝘀𝗼̂́ 𝗮̉𝗻𝗵\n🔰 ${p}𝗽𝗶𝗻 𝗱𝗼𝘄𝗻 + 𝗹𝗶𝗻𝗸: 𝘁𝗮̉𝗶 𝗮̉𝗻𝗵/𝘃𝗱 𝗰𝗼́ 𝗰𝗵𝘂̛́𝗮 𝗹𝗶𝗻𝗸`, attachment: fs.createReadStream(__dirname + `/noprefix/pinterest.jpg`) }, event.threadID, event.messageID);
-  }
-};
-
-async function getUrlDownloadImage(url) {
-  const res = await axios.get(url);
-  const json = JSON.parse(res.data.split('<script id="__PWS_DATA__" type="application/json">')[1].split('</script>')[0]);
-  const pins = json.props.initialReduxState.pins;
-  let getPins = pins[Object.keys(pins)[0]];
-  if (getPins.images) {
-    const images = getPins.images;
-    const keyLength = Object.keys(images);
-    const latestImages = images.orig || images[keyLength[keyLength.length - 1]];
-    return latestImages.url;
-  } else if (getPins.videos) {
-    getPins = getPins.videos.video_list;
-    return Object.values(getPins).pop().url;
-  }
-}
+      request(options, callback);
+        }

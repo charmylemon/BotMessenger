@@ -21,7 +21,7 @@ module.exports.handleReaction = async function({ api, event, Threads, handleReac
 
     api.changeNickname(`『 ${handleReaction.PREFIX} 』 ⪼ ${global.config.BOTNAME}`, event.threadID, event.senderID);
     
-		return api.sendMessage({body:`𝚄𝚙𝚍𝚊𝚝𝚎 𝚙𝚛𝚎𝚏𝚒𝚡 𝚝𝚘:  ${handleReaction.PREFIX}`}, event.threadID, event.messageID);
+		return api.sendMessage({body:`Update prefix to:  ${handleReaction.PREFIX}`}, event.threadID, event.messageID);
     
 	} catch (e) { return console.log(e) }
 }

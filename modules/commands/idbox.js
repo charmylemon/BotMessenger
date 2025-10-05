@@ -3,7 +3,7 @@ module.exports.config = {
   version: "1.0.0",
   hasPermssion: 0,
   credits: "manhIT",
-  description: "Kiểm tra thông tin nhóm chat.",
+  description: "lấy ID nhóm chat.",
   commandCategory: "Nhóm",
   usages: "",
   cooldowns: 5,

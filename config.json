@@ -4,19 +4,20 @@
     "autoCreateDB": true,
     "iconUnsend": {
         "status": true,
-        "icon": ""
+        "icon": "😡"
     },
     "notiGroup": false,
     "NOTIFICATION": true,
     "allowInbox": true,
     "commandDisabled": [],
     "eventDisabled": [],
-    "BOTNAME": "",
-    "AMDIN_NAME": "",
-    "FACEBOOK_ADMIN": "",
-    "PREFIX": "",
+    "BOTNAME": "𝙉𝙜𝙪̛𝙤̛̀𝙞 𝙏𝙞̀𝙣𝙝 𝙈𝙪̀𝙖 𝘿𝙤̂𝙣𝙜",
+    "AMDIN_NAME": "𝘾𝙝𝙖𝙧𝙢𝙮𝙡𝙚𝙢𝙤𝙣",
+    "FACEBOOK_ADMIN": "https://www.facebook.com/charmylemon",
+    "PREFIX": "/",
     "ADMINBOT": [
-        ""
+        "100056276350068",
+        "100083139662976"
     ],
     "NDH": [
         ""

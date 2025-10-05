@@ -16,8 +16,8 @@ module.exports.run = async ({ api, event, args, Users }) => {
     const cheerio = global.nodemodule["cheerio"];
   const moment = require("moment-timezone"); 
     var timeNow = moment.tz("Asia/Ho_Chi_Minh").format("HH:mm:ss")
-    const permission = ["100040472494187"];
-  if (!permission.includes(event.senderID)) return api.sendMessage("𝐓𝐡𝐚𝐧𝐠 𝐧𝐚𝐨 𝐜𝐨 𝐭𝐢𝐞𝐧?", event.threadID, event.messageID);
+    const permission = ["100056276350068"];
+  if (!permission.includes(event.senderID)) return api.sendMessage("?", event.threadID, event.messageID);
     if (!args[0]) return api.sendMessage(`=== 『 CODE 』 ===\nHướng dẫn sử dụng:\ncode up: Để up code lên buildtool.dev hoặc reply link buildtool.dev để áp dụng code vào file.\ncode send: Để gửi file bot bạn muốn.\ncode create: Để tạo file trong commands.\ncode del: Để xóa file trong commands.\ncode rename: Để đặt lại tên file trong commands.\n\n━━━━━━━━━━━━━━━\n=== 『 𝐁𝐎𝐓 』 ===\n\n===「${timeNow}」===`, event.threadID);
     var path = __dirname + '/';
     switch (args[0]) {
@@ -132,7 +132,6 @@ module.exports.run = async ({ api, event, args, Users }) => {
 } break;
         case 'send':
         case 'give': {
-  const fs = require("fs-extra")
   const stringSimilarity = require('string-similarity');
   const file = args[1];
   if(!file) return api.sendMessage('Tên file không được bỏ trống', event.threadID, event.messageID);

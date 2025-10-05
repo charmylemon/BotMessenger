@@ -1,94 +1,83 @@
 module.exports.config = {
-  name: "joinNoti",
-  eventType: ["log:subscribe"],
-  version: "1.0.1",
-  credits: "Mirai Team",
-  description: "Thông báo bot hoặc người vào nhóm",
-  dependencies: {
-    "fs-extra": ""
-  }
+    name: "joinNoti",
+    eventType: ["log:subscribe"],
+    version: "1.0.1",
+    credits: "TatsuYTB",
+    description: "Thông báo bot hoặc người vào nhóm"
 };
 
 module.exports.run = async function({ api, event, Users }) {
-  const { threadID } = event;
+    const { threadID, logMessageData } = event;
+    const pathData = require("path").join(__dirname, "../commands/data/joinNoti.json");
+    const { readFileSync } = require("fs-extra");
 
-  if (event.logMessageData.addedParticipants.some(i => i.userFbId == api.getCurrentUserID())) {
-    api.changeNickname(`[ ${global.config.PREFIX} ] • ${(!global.config.BOTNAME) ? "Made by CatalizCS and SpermLord" : global.config.BOTNAME}`, threadID, api.getCurrentUserID());
-    api.sendMessage(`[𝐊𝐞̂́𝐭 𝐍𝐨̂́𝐢 𝐓𝐡𝐚̀𝐧𝐡 𝐂𝐨̂𝐧𝐠]`, threadID);
-  } else {
-    try {
-      const { createReadStream, existsSync, mkdirSync } = global.nodemodule["fs-extra"];
-      const { threadName, participantIDs } = await api.getThreadInfo(threadID);
+    const botID = api.getCurrentUserID();
+    const botAdded = logMessageData.addedParticipants.some(p => p.userFbId == botID);
 
-      const nameArray = [];
-      const mentions = [];
-      const memLength = [];
-      let i = 0;
+    if (botAdded) {
+        await api.changeNickname(
+            `[ ${global.config.PREFIX} ] • ${global.config.BOTNAME || "Bot"}`,
+            threadID,
+            botID
+        );
+        return api.sendMessage(`[𝐊𝐞̂́𝐭 𝐍𝐨̂́𝐢 𝐓𝐡𝐚̀𝐧𝐡 𝐂𝐨̂𝐧𝐠]`, threadID);
+    }
 
-      for (const id in event.logMessageData.addedParticipants) {
-        const userName = event.logMessageData.addedParticipants[id].fullName;
+    let dataJson = [];
+    try { dataJson = JSON.parse(readFileSync(pathData, "utf-8")); } 
+    catch { dataJson = []; }
+
+    const thisThread = dataJson.find(i => i.threadID == threadID) || { message: null, enable: true };
+    if (!thisThread.enable) return; 
+
+    let msg = thisThread.message || `✿——————————————✿
+𝐗𝐢𝐧 𝐜𝐡𝐚̀𝐨: [ {name} ]
+𝐂𝐡𝐚̀𝐨 𝐦𝐮̛̀𝐧𝐠 𝐛𝐚̣𝐧 đ𝐞̂́n 𝐯𝐨̛́𝐢: [ {threadName} ]
+𝐁𝐚̣𝐧 𝐥𝐚̀ 𝐭𝐡𝐚̀𝐧𝐡 𝐯𝐢𝐞̂𝐧 𝐬𝐨̂́: [ {soThanhVien} ]
+𝐃̄𝐮̛𝐨̛̣𝐜 𝐭𝐡𝐞̂𝐦 𝐛𝐨̛̉𝐢: [ {author} ]
+𝐂𝐡𝐮́𝐜 𝐛𝐚̣𝐧 𝐜𝐨́ 𝐦𝐨̣̂𝐭 𝐧𝐠𝐚̀𝐲 𝐯𝐮𝐢 𝐯𝐞̉ 💝
+✿——————————————✿`;
+
+    const nameArray = [];
+    const mentions = [];
+
+    for (const p of logMessageData.addedParticipants) {
+        if (p.userFbId == botID) continue; 
+        const userName = p.fullName;
         nameArray.push(userName);
-        mentions.push({ tag: userName, id });
-        memLength.push(participantIDs.length - i++);
+        mentions.push({ tag: userName, id: p.userFbId });
 
-        if (!global.data.allUserID.includes(id)) {
-          await Users.createData(id, { name: userName, data: {} });
-          global.data.userName.set(id, userName);
-          global.data.allUserID.push(id);
+        if (!global.data.allUserID.includes(p.userFbId)) {
+            await Users.createData(p.userFbId, { name: userName, data: {} });
+            global.data.userName.set(p.userFbId, userName);
+            global.data.allUserID.push(p.userFbId);
         }
-      }
-      memLength.sort((a, b) => a - b);
+    }
 
-      const threadData = global.data.threadData.get(parseInt(threadID)) || {};
-      let msg = "";
+    if (nameArray.length == 0) return; 
 
-      if (typeof threadData.customJoin === "undefined") {
-        msg = `✿——————————————✿\n𝐗𝐢𝐧 𝐜𝐡𝐚̀𝐨: [ {name} ]\n𝐂𝐡𝐚̀𝐨 𝐦𝐮̛̀𝐧𝐠 𝐛𝐚̣𝐧 𝐝̄𝐞̂́𝐧 𝐯𝐨̛́𝐢: [ {threadName} ]\n𝐁𝐚̣𝐧 𝐥𝐚̀ 𝐭𝐡𝐚̀𝐧𝐡 𝐯𝐢𝐞̂𝐧 𝐬𝐨̂́: [ {soThanhVien} ]\n𝐃̄𝐮̛𝐨̛̣𝐜 𝐭𝐡𝐞̂𝐦 𝐛𝐨̛̉𝐢: [ {author} ]\n𝐂𝐡𝐮́𝐜 𝐛𝐚̣𝐧 𝐜𝐨́ 𝐦𝐨̣̂𝐭 𝐧𝐠𝐚̀𝐲 𝐯𝐮𝐢 𝐯𝐞̉ 💝\n✿——————————————✿`;
-      } else {
-        msg = threadData.customJoin;
-      }
+    const threadInfo = await api.getThreadInfo(threadID);
+    const authorData = await Users.getData(event.author);
+    const authorName = authorData?.name || "link join";
 
-      const getData = await Users.getData(event.author);
-      const nameAuthor = typeof getData.name === "undefined" ? "link join" : getData.name;
+    const moment = require("moment-timezone");
+    const time = moment.tz("Asia/Ho_Chi_Minh");
+    const gio = parseInt(time.format("HH"));
+    const bok = time.format("DD/MM/YYYY");
 
-      const time = require("moment-timezone").tz("Asia/Ho_Chi_Minh");
-      const gio = time.format("HH");
-      const moment = require("moment-timezone");
-      const bok = moment.tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY" || "HH:mm:ss");
+    let buoi = "𝐁𝐮𝐨̂̉𝐢 𝐒𝐚́𝐧𝐠";
+    if (gio >= 11) buoi = "𝐁𝐮𝐨̂̉𝐢 𝐓𝐫𝐮̛𝐚";
+    if (gio >= 14) buoi = "𝐁𝐮𝐨̂̉𝐢 𝐂𝐡𝐢Ề𝐮";
+    if (gio >= 19) buoi = "𝐁𝐮𝐨̂̉𝐢 𝐓𝐨̂́𝐢";
 
-      let get = "";
-      if (gio >= 5) get = "𝐁𝐮𝐨̂̉𝐢 𝐒𝐚́𝐧𝐠";
-      if (gio >= 11) get = "𝐁𝐮𝐨̂̉𝐢 𝐓𝐫𝐮̛𝐚";
-      if (gio >= 14) get = "𝐁𝐮𝐨̂̉𝐢 𝐂𝐡𝐢Ề̀u";
-      if (gio >= 19) get = "𝐁𝐮𝐨̂̉𝐢 𝐓𝐨̂́𝐢";
-
-      msg = msg
+    msg = msg
         .replace(/\{name}/g, nameArray.join(", "))
-        .replace(/\{type}/g, memLength.length > 1 ? "𝐜𝐚́𝐜 𝐛𝐚̣𝐧" : "𝐛𝐚̣𝐧")
-        .replace(/\{soThanhVien}/g, memLength.join(", "))
-        .replace(/\{threadName}/g, threadName)
-        .replace(/\{get}/g, get)
-        .replace(/\{author}/g, nameAuthor)
+        .replace(/\{type}/g, nameArray.length > 1 ? "𝐜𝐚́𝐜 𝐛𝐚̣𝐧" : "𝐛𝐚̣𝐧")
+        .replace(/\{soThanhVien}/g, threadInfo.participantIDs.length)
+        .replace(/\{threadName}/g, threadInfo.threadName)
+        .replace(/\{author}/g, authorName)
+        .replace(/\{get}/g, buoi)
         .replace(/\{bok}/g, bok);
 
-      const path = require("path");
-      const pathGif = path.join(__dirname, "cache", "joinGif", `${1}.mp5`);
-
-      if (existsSync(pathGif)) {
-        formPush = { body: msg, attachment: createReadStream(pathGif), mentions };
-      } else {
-        formPush = { body: msg, mentions };
-      }
-
-      if (existsSync(pathGif)) {
-        formPush = { body: msg, attachment: createReadStream(pathGif), mentions };
-      } else {
-        formPush = { body: msg, mentions };
-      }
-
-      return api.sendMessage(formPush, threadID);
-    } catch (e) {
-      console.log(e);
-    }
-  }
+    return api.sendMessage({ body: msg, mentions }, threadID);
 };

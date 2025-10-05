@@ -13,7 +13,7 @@ module.exports.run = async function({ api, event, args}) {
 	try {
 		const botID = api.getCurrentUserID();
 		const listUserID = event.participantIDs.filter(ID => ID != botID && ID != event.senderID);
-		var body = (args.length != 0) ? args.join(" ") : "Các con vợ dậy tương tác🤘🏻", mentions = [], index = 0;
+		var body = (args.length != 0) ? args.join(" ") : "Các con vợ dậy tương tác:3", mentions = [], index = 0;
 		
     for(const idUser of listUserID) {
 

@@ -1,0 +1,93 @@
+{
+    "total": [
+        {
+            "id": "673106566",
+            "count": 8
+        },
+        {
+            "id": "61566015001561",
+            "count": 80
+        },
+        {
+            "id": "100079766846226",
+            "count": 62
+        },
+        {
+            "id": "100083139662976",
+            "count": 188
+        },
+        {
+            "id": "61560892955882",
+            "count": 58
+        },
+        {
+            "id": "61557069581687",
+            "count": 65
+        }
+    ],
+    "week": [
+        {
+            "id": "673106566",
+            "count": 1,
+            "name": "Người Tình Mùa Hạ"
+        },
+        {
+            "id": "61566015001561",
+            "count": 30,
+            "name": "Pham Tuan Viet bi hoi"
+        },
+        {
+            "id": "100079766846226",
+            "count": 20,
+            "name": "Thanh Duyen"
+        },
+        {
+            "id": "100083139662976",
+            "count": 26,
+            "name": "Lê Tuấn A."
+        },
+        {
+            "id": "61560892955882",
+            "count": 38,
+            "name": "Thùy Chinh"
+        },
+        {
+            "id": "61557069581687",
+            "count": 56,
+            "name": "Tuan Phongg"
+        }
+    ],
+    "day": [
+        {
+            "id": "673106566",
+            "count": 1,
+            "name": "Người Tình Mùa Hạ"
+        },
+        {
+            "id": "61566015001561",
+            "count": 0,
+            "name": "Pham Tuan Viet bi hoi"
+        },
+        {
+            "id": "100079766846226",
+            "count": 13,
+            "name": "Thanh Duyen"
+        },
+        {
+            "id": "100083139662976",
+            "count": 17,
+            "name": "Lê Tuấn A."
+        },
+        {
+            "id": "61560892955882",
+            "count": 0,
+            "name": "Thùy Chinh"
+        },
+        {
+            "id": "61557069581687",
+            "count": 3,
+            "name": "Tuan Phongg"
+        }
+    ],
+    "time": 0
+}

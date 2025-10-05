@@ -6,8 +6,8 @@ module.exports.config = {
   Rent: 2,
   description: "Xem video về anime chill",
   commandCategory: "Random-img",
-  usages: "",
-  cooldowns: 2
+  usages: "/vdgai",
+  cooldowns: 30
 };
 
 module.exports.run = async ({ api, event ,Users}) => {

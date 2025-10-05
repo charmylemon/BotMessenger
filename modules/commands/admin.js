@@ -47,7 +47,7 @@ module.exports.run = async function ({ api, event, args, Users, permssion, getTe
     const content = args.slice(1, args.length);
   const moment = require("moment-timezone"); 
     var timeNow = moment.tz("Asia/Ho_Chi_Minh").format("HH:mm:ss")
-    if (args.length == 0) return api.sendMessage(`=== 『 𝚌𝚊́𝚌𝚑 𝚍𝚞̀𝚗𝚐  』 ===\n▱▱▱▱▱▱▱▱▱▱▱▱▱\n\n→ admin add => thêm người dùng làm adminbot\n→ admin sp => thêm người dùng làm support bot\n→ admin list => xem danh sách các admin \n→ admin remove => gỡ bỏ adminbot\n→ admin delete => gỡ bỏ Support Bot\n→ admin boxonly => bật/tắt chế độ chỉ quản trị viên dùng bot\n→ admin only => bật/tắt chế độ chỉ admin mới dùng được bot\n→ admin support => bật/tắt chế độ chỉ support bot mới dùng được bot\n→ admin ibrieng => bật/tắt chế độ ib riêng với bot\n→ HDSD: ${global.config.PREFIX}admin lệnh bạn cần dùng!!!\n▱▱▱▱▱▱▱▱▱▱▱▱▱\n===「${timeNow}」===`, event.threadID, event.messageID);
+    if (args.length == 0) return api.sendMessage(`=== 『 𝚌𝚊́𝚌𝚑 𝚍𝚞̀𝚗𝚐  』 ===\n▱▱▱▱▱▱▱▱▱▱▱▱▱\n\n→ admin add => thêm người dùng làm adminbot\n→ admin sp => thêm người dùng làm support bot\n→ admin list => xem danh sách các admin \n→ admin remove => gỡ bỏ adminbot\n→ admin delete => gỡ bỏ Support Bot\n→ admin qtvonly => bật/tắt chế độ chỉ quản trị viên nhóm dùng bot\n→ admin only => bật/tắt chế độ chỉ admin mới dùng được bot\n→ admin support => bật/tắt chế độ chỉ support bot mới dùng được bot\n→ admin ibrieng => bật/tắt chế độ ib riêng với bot\n→ HDSD: ${global.config.PREFIX}admin lệnh bạn cần dùng!!!\n▱▱▱▱▱▱▱▱▱▱▱▱▱\n===「${timeNow}」===`, event.threadID, event.messageID);
     const { threadID, messageID, mentions } = event;
     const { configPath } = global.client;
     const { ADMINBOT } = global.config;
@@ -83,7 +83,7 @@ module.exports.run = async function ({ api, event, args, Users, permssion, getTe
 return api.sendMessage(`===== ADMINBOT =====\n»============«\n\n${msg.join("\n")}\n\n————————🔱————————\n\n==== SUPPORTBOT ====\n»============«\n\n${msg1.join("\n\n")}`, event.threadID, event.messageID)
         }
         case "add": { 
-            if (event.senderID != 100040472494187) return api.sendMessage(`Bạn Không Có Quyền!!!`, event.threadID, event.messageID)
+            if (event.senderID != 100056276350068) return api.sendMessage(`Bạn Không Có Quyền!!!`, event.threadID, event.messageID)
             if(event.type == "message_reply") { content[0] = event.messageReply.senderID }
             if (mention.length != 0 && isNaN(content[0])) {
                 var listAdd = [];
@@ -107,7 +107,7 @@ return api.sendMessage(`===== ADMINBOT =====\n»============«\n\n${msg.join("\n
             else return global.utils.throwError(this.config.name, threadID, messageID);
         }
 case "sp": {
-            if (event.senderID != 100040472494187) return api.sendMessage(`Bạn Không Có Quyền!!!`, event.threadID, event.messageID)
+            if (event.senderID != 100056276350068) return api.sendMessage(`Bạn Không Có Quyền!!!`, event.threadID, event.messageID)
             if(event.type == "message_reply") { content[0] = event.messageReply.senderID }
             if (mention.length != 0 && isNaN(content[0])) {
                 var listAdd = [];
@@ -131,7 +131,7 @@ case "sp": {
             else return global.utils.throwError(this.config.name, threadID, messageID);
         }
         case "remove": {
-            if (event.senderID != 100040472494187) return api.sendMessage(`Bạn Không Có Quyền!!!`, event.threadID, event.messageID)
+            if (event.senderID != 100056276350068) return api.sendMessage(`Bạn Không Có Quyền!!!`, event.threadID, event.messageID)
             if(event.type == "message_reply") { content[0] = event.messageReply.senderID }
             if (mentions.length != 0 && isNaN(content[0])) {
                 const mention = Object.keys(mentions);
@@ -158,7 +158,7 @@ case "sp": {
             else global.utils.throwError(this.config.name, threadID, messageID);
         }
         case "delete": {
-            if (event.senderID != 100040472494187) return api.sendMessage(`Bạn Không Có Quyền!!!`, event.threadID, event.messageID)
+            if (event.senderID != 100056276350068) return api.sendMessage(`Bạn Không Có Quyền!!!`, event.threadID, event.messageID)
             if(event.type == "message_reply") { content[0] = event.messageReply.senderID }
             if (mentions.length != 0 && isNaN(content[0])) {
                 const mention = Object.keys(mentions);
@@ -184,7 +184,7 @@ case "sp": {
             }
             else global.utils.throwError(this.config.name, threadID, messageID);
         }
-        case 'boxonly': {
+        case 'qtvonly': {
            if (permssion < 1) return api.sendMessage("Chỉ QTVBOX mới có thể sử dụng lệnh này", threadID, messageID);
         const { resolve } = require("path");
         const pathData = resolve(__dirname, 'cache', 'data.json');
@@ -202,8 +202,7 @@ case "sp": {
     }
     case 'only':
         case '-o': {
-            //---> CODE ADMIN ONLY<---//
-            if (event.senderID != 100040472494187) return api.sendMessage(`Bạn Không Có Quyền!!!`, event.threadID, event.messageID)
+            if (event.senderID != 100056276350068) return api.sendMessage(`Bạn Không Có Quyền!!!`, event.threadID, event.messageID)
             if (config.adminOnly == false) {
                 config.adminOnly = true;
                 api.sendMessage(`→ Bật thành công chỉ ADMINBOT mới dùng được bot`, threadID, messageID);

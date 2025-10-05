@@ -43,8 +43,8 @@ module.exports.handleReply = async function ({ api, event, handleReply, Users, T
     let name = await Users.getNameUser(senderID);
     switch (handleReply.type) {
         case "noti": {
-            let text = `[📝] Nội dung : ${body}\n『 🌸 』 Từ ${name}  nhóm ${(await Threads.getInfo(threadID)).threadName || "Unknow"}`;
-            if(event.attachments.length > 0) text = await getAtm(event.attachments, `[📝] Nội dung: ${body}\n『 🌸 』 Từ ${name} Trong nhóm ${(await Threads.getInfo(threadID)).threadName || "Unknow"}`);
+            let text = `『 📝 』 Nội dung : ${body}\n『 🌸 』 Từ ${name}  nhóm ${(await Threads.getInfo(threadID)).threadName || "Unknow"}`;
+            if(event.attachments.length > 0) text = await getAtm(event.attachments, `『 📝 』 Nội dung: ${body}\n『 🌸 』 Từ ${name} Trong nhóm ${(await Threads.getInfo(threadID)).threadName || "Unknow"}`);
             api.sendMessage(text, handleReply.threadID, (err, info) => {
                 atmDir.forEach(each => fs.unlinkSync(each))
                 atmDir = [];
@@ -59,8 +59,8 @@ module.exports.handleReply = async function ({ api, event, handleReply, Users, T
             break;
         }
         case "reply": {
-            let text = `[📝] Nội dung : ${body}\n『 🌸 』 Từ ${name} With Love!\nreply tin nhắn này để báo về admin`;
-            if(event.attachments.length > 0) text = await getAtm(event.attachments, `[❗] ${body}\n\n『 🌸 』 From ${name} With Love!\nreply tin nhắn này để báo về admin`);
+            let text = `『 📝 』 Nội dung : ${body}\n『 🌸 』 Từ ${name} \nreply tin nhắn này để báo về admin`;
+            if(event.attachments.length > 0) text = await getAtm(event.attachments, `『 ❗ 』 ${body}\n\n『 🌸 』 From ${name} \nreply tin nhắn này để báo về admin`);
             api.sendMessage(text, handleReply.threadID, (err, info) => {
                 atmDir.forEach(each => fs.unlinkSync(each))
                 atmDir = [];
@@ -82,8 +82,8 @@ module.exports.run = async function ({ api, event, args, Users }) {
     if (!args[0]) return api.sendMessage("『 🌸 』 Please input message", threadID);
     let allThread = global.data.allThreadID || [];
     let can = 0, canNot = 0;
-    let text = `[📝] Nội dung : ${args.join(" ")}\n『 🌸 』 Từ ${await Users.getNameUser(senderID)} \n[❤️] Reply tin nhắn này để báo về admin`;
-    if(event.type == "message_reply") text = await getAtm(messageReply.attachments, `[📝] Nội dung : ${args.join(" ")}\n『 🌸 』 Từ ${await Users.getNameUser(senderID)}\n[❤️] Reply tin nhắn này để báo về admin`);
+    let text = `『 📝 』 Nội dung : ${args.join(" ")}\n『 🌸 』 Từ ${await Users.getNameUser(senderID)} \n[❤️] Reply tin nhắn này để báo về admin`;
+    if(event.type == "message_reply") text = await getAtm(messageReply.attachments, `『 📝 』Nội dung : ${args.join(" ")}\n『 🌸 』 Từ ${await Users.getNameUser(senderID)}\n『 ❤️ 』Reply tin nhắn này để báo về admin`);
     await new Promise(resolve => {
         allThread.forEach((each) => {
             try {

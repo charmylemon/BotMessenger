@@ -14,7 +14,7 @@ module.exports.config = {
 
 module.exports.languages = {
 	"vi": {
-		"returnTimeNow": "Nếu bạn đi ngủ bây giờ, những thời gian hoàn hảo nhất để thức dậy là:\n%1",
+		"returnTimeNow": "Nếu bạn đi ngủ bây giờ, những thời gian hoàn hảo nhất để thức dậy là:\n%1\nĐây là chu kỳ giấc ngủ 90 phút bạn có thể tìm hiểu thêm trên goole",
 		"returnTimeSet": "Nếu bạn đi ngủ vào lúc %1, những thời gian hoàn hảo nhất để thức dậy là:\n%2"	
 	},
 	"en": {

@@ -6,7 +6,7 @@ module.exports.config = {
   description: "Xem ảnh",
   commandCategory: "Random-img",
   usages: "",
-  cooldowns: 2
+  cooldowns: 30
 };
 
 module.exports.run = async ({ api, event ,Users}) => {

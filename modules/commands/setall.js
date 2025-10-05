@@ -3,7 +3,7 @@ module.exports.config = {
   version: "1.0.0",
   hasPermssion: 1,
   credits: "manhIT",
-  description: "Set biệt danh cho all tv",
+  description: "Set biệt danh cho all tv giống nhau",
   commandCategory: "Quản Lí Box",
   usages: "[name]",
   cooldowns: 3

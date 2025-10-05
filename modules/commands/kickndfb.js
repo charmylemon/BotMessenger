@@ -3,7 +3,7 @@ module.exports.config = {
 	version: "1.0.0",
 	hasPermssion: 1,
 	credits: "ProCoderMew",
-	description: "Lọc người dùng Facebook",
+	description: "Lọc mem bay acc",
 	commandCategory: "Quản Lí Box",
 	usages: "kickndfb",
 	cooldowns: 20

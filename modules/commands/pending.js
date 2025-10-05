@@ -32,8 +32,8 @@ module.exports.handleReply = async function({ api, event, handleReply, getText }
         for (const singleIndex of index) {
             if (isNaN(singleIndex) || singleIndex <= 0 || singleIndex > handleReply.pending.length) return api.sendMessage(`→ ${singleIndex} Không phải là một con số hợp lệ`, threadID, messageID);
             api.unsendMessage(handleReply.messageID);
-            api.changeNickname(`[ ${global.config.PREFIX} ] • ${(!global.config.BOTNAME) ? "Ngô Trung Kiên" : global.config.BOTNAME}`, handleReply.pending[singleIndex - 1].threadID, api.getCurrentUserID());
-            api.sendMessage("", event.threadID, () => api.sendMessage(`❯ Admin: fb.com/TatsuYTB`, handleReply.pending[singleIndex - 1].threadID));
+            api.changeNickname(`[ ${global.config.PREFIX} ] • ${(!global.config.BOTNAME) ? "TatsuYTB" : global.config.BOTNAME}`, handleReply.pending[singleIndex - 1].threadID, api.getCurrentUserID());
+            api.sendMessage("", event.threadID, () => api.sendMessage(`❯ 𝐍𝐡𝐨́𝐦 𝐜𝐮̉𝐚 𝐛𝐚̣𝐧 𝐝𝐚̃ 𝐝𝐮̛𝐨̛̣𝐜 𝐝𝐮𝐲𝐞̣̂𝐭 𝐥𝐢𝐞̂𝐧 𝐡𝐞̣̂ 𝐀𝐃𝐌𝐈𝐍 𝐝𝐞̂̉ 𝐥𝐚̂́𝐲 𝐤𝐞𝐲 𝐭𝐡𝐮𝐞̂ 𝐛𝐨𝐭`, handleReply.pending[singleIndex - 1].threadID));
             count+=1;
             
         }

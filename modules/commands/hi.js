@@ -74,7 +74,7 @@ module.exports.handleEvent = async ({ event, api, Users }) => {
     hours > 1701 && hours <= 1800 ? "chiều tối" : 
     hours > 1801 && hours <= 2100 ? "tối" : 
     hours > 2101 && hours <= 2400 ? "tối khuya" : 
-    "lỗi");
+    "?");
     let name = await Users.getNameUser(event.senderID);
     let mentions = [];
     mentions.push({

@@ -72,9 +72,6 @@ module.exports.handleReply = async function ({ api, args, Users, handleReply, ev
           strS += ' ' + str + "\n";
 
         }
-        //console.log(modules, msg);
-        //api.sendMessage(`»Thông báo từ Admin ${name}«\n\n ${strS} \n\nBạn Đã Được Gỡ Ban để có thể tiếp tục sử dụng bot`, uidS, () =>
-        //api.sendMessage(`${global.data.botID}`, () =>
         api.sendMessage(`★★Thực thi Unban(true/false)★★\n\n${msg}`, event.threadID, () =>
           api.unsendMessage(handleReply.messageID));
       }
@@ -87,25 +84,20 @@ module.exports.run = async function ({ event, api, Users, args, Threads }) {
   var listBanned = [], listbanViews = [];
   i = 1, j = 1;
   var dataThread = [];
-  //var nameThread = [];
   switch (args[0]) {
     case "thread":
     case "t":
     case "-t":
       {
         const threadBanned = global.data.threadBanned.keys();
-        //console.log(threadBanned)
         for (const singleThread of threadBanned) {
           const nameT = await global.data.threadInfo.get(singleThread).threadName || "Tên không tồn tại";
           const reason = await global.data.threadBanned.get(singleThread).reason;
           const date = await global.data.threadBanned.get(singleThread).dateAdded;
-          //const data = (await api.getThreadInfo(singleThread));
-          //const nameT = data.name;
           var modules = "ThreadBan: "
-          //console.log(modules, nameT)
           listBanned.push(`${i++}. ${nameT}\n🔰TID: ${singleThread}`);
 
-          listbanViews.push(`${j++}. ${nameT}\n🔰TID: ${singleThread}\n🤷‍♀️Lý do: ${reason}\n_Time: ${date}`);
+          listbanViews.push(`${j++}. ${nameT}\n🔰TID: ${singleThread}\n💢Lý do: ${reason}\n_Time: ${date}`);
 
         };
 
@@ -136,7 +128,7 @@ module.exports.run = async function ({ event, api, Users, args, Threads }) {
           const reason = await global.data.userBanned.get(singleUser).reason;
           const date = await global.data.userBanned.get(singleUser).dateAdded;
 
-          listbanViews.push(`${i++}. ${name} \n🔰UID: ${singleUser}\n🤷‍♀️Lý do: ${reason}\n_Time: ${date}`);
+          listbanViews.push(`${i++}. ${name} \n🔰UID: ${singleUser}\n💢Lý do: ${reason}\n_Time: ${date}`);
 
           listBanned.push(`${j++}. ${name} \n🔰UID: ${singleUser}`);
 

@@ -215,7 +215,7 @@ module.exports.run = async ({ event, api, args }) => {
     }
     
     if (global.game[threadID].author) {
-        return api.sendMessage('Nhóm này đã có bàn cờ được tạo, vui lòng kết thúc bàn cờ bàng cách chat "$caro clear"', threadID, messageID);
+        return api.sendMessage('Nhóm này đã có bàn cờ được tạo, vui lòng kết thúc bàn cờ bàng cách chat "#caro clear"', threadID, messageID);
     };
     var player2 = Object.keys(event.mentions)[0];
     if(!player2) return api.sendMessage("Cần tag người bạn muốn chơi cùng!!", event.threadID, event.messageID);

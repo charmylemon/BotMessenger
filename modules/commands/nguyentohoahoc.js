@@ -4,7 +4,7 @@ module.exports.config = {
 	hasPermssion: 0,
 	credits: "LeMinh",
 	description: "Nguyên tố hoá học",
-	commandCategory: "Study",
+	commandCategory: "Kiến Thức",
 	cooldowns: 0
 };
 
