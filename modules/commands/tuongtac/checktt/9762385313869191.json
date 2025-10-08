@@ -10,27 +10,19 @@
         },
         {
             "id": "100030911922796",
-            "count": 79
+            "count": 94
         },
         {
             "id": "100056276350068",
-            "count": 206
+            "count": 291
         },
         {
             "id": "100073830770755",
-            "count": 167
-        },
-        {
-            "id": "100086217615188",
-            "count": 6
+            "count": 227
         },
         {
             "id": "100088368391179",
             "count": 0
-        },
-        {
-            "id": "100089795536553",
-            "count": 201
         }
     ],
     "week": [
@@ -46,33 +38,23 @@
         },
         {
             "id": "100030911922796",
-            "count": 16,
+            "count": 31,
             "name": "Hoàng Đạt"
         },
         {
             "id": "100056276350068",
-            "count": 106,
+            "count": 191,
             "name": "Lê Minh Hoàng"
         },
         {
             "id": "100073830770755",
-            "count": 91,
+            "count": 151,
             "name": "Tran Phuong Linh"
-        },
-        {
-            "id": "100086217615188",
-            "count": 4,
-            "name": "Chang Dayy"
         },
         {
             "id": "100088368391179",
             "count": 0,
             "name": "Phương Linh"
-        },
-        {
-            "id": "100089795536553",
-            "count": 109,
-            "name": "Huyen Trang"
         }
     ],
     "day": [
@@ -88,34 +70,24 @@
         },
         {
             "id": "100030911922796",
-            "count": 0,
+            "count": 15,
             "name": "Hoàng Đạt"
         },
         {
             "id": "100056276350068",
-            "count": 15,
+            "count": 100,
             "name": "Lê Minh Hoàng"
         },
         {
             "id": "100073830770755",
-            "count": 24,
+            "count": 84,
             "name": "Tran Phuong Linh"
-        },
-        {
-            "id": "100086217615188",
-            "count": 0,
-            "name": "Chang Dayy"
         },
         {
             "id": "100088368391179",
             "count": 0,
             "name": "Phương Linh"
-        },
-        {
-            "id": "100089795536553",
-            "count": 4,
-            "name": "Huyen Trang"
         }
     ],
-    "time": 0
+    "time": 3
 }
