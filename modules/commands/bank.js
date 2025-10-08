@@ -1,13 +1,11 @@
 const moment = require('moment-timezone');
-const adminID = "100056276350068"; // 👑 Admin được phép chỉnh lãi suất
-const laisuatPath = __dirname + "/data/laisuat.json"; // nơi lưu lãi suất riêng
 
 module.exports.config = {
     name: "bank",
-    version: "0.0.2",
+    version: "0.0.1",
     hasPermssion: 0,
-    credits: "D-Jukie-keychinhle (mod by GPT-5)",
-    description: "Gửi tiền, rút tiền, xem ngân hàng và chỉnh lãi suất (admin)",
+    credits: "D-Jukie-keychinhle (chinhle đã sủi)",
+    description: "",
     commandCategory: "Tiện ích",
     usages: "",
     cooldowns: 0,
@@ -18,7 +16,6 @@ module.exports.config = {
     }
 };
 
-// ✅ Load dữ liệu và setup file
 module.exports.onLoad = async () => {
     const { existsSync, writeFileSync, mkdirSync } = require("fs-extra");
     const { join } = require("path");
@@ -26,20 +23,16 @@ module.exports.onLoad = async () => {
     if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
     const pathData = join(__dirname, 'data/bank.json');
     if (!existsSync(pathData)) writeFileSync(pathData, "[]", "utf-8");
-    if (!existsSync(laisuatPath)) writeFileSync(laisuatPath, JSON.stringify({ rate: 0.05 }), "utf-8");
 
     setInterval(checkAndCalculateInterest, 1 * 60 * 60 * 1000);
     return;
 };
 
-// ✅ Hàm tính lãi
 async function checkAndCalculateInterest() {
     const { readFileSync, writeFileSync } = require("fs-extra");
     const { join } = require("path");
     const pathData = join(__dirname, 'data/bank.json');
-
-    const rateData = JSON.parse(readFileSync(laisuatPath, "utf-8"));
-    const laisuat = rateData.rate;
+    const laisuat = 0.05;
 
     let user = JSON.parse(readFileSync(pathData, "utf-8"));
     const now = moment();
@@ -54,6 +47,7 @@ async function checkAndCalculateInterest() {
         const diffHours = now.diff(lastTime, 'hours');
 
         if (diffHours >= 12) {
+            // Tính lãi
             let updatedMoney = BigInt(account.money) + (BigInt(account.money) * BigInt(Math.floor(laisuat * 100))) / BigInt(100); 
             account.money = String(updatedMoney);
             account.lastInterestTime = now.toISOString();
@@ -63,10 +57,9 @@ async function checkAndCalculateInterest() {
     });
 
     writeFileSync(pathData, JSON.stringify(user, null, 2));
-    console.log(`✅ Đã tính lãi (${laisuat * 100}%) cho tài khoản đủ 12 giờ.`);
+    console.log('Đã kiểm tra và tính lãi nếu đủ 12 giờ.');
 }
 
-// ✅ Lệnh chính
 module.exports.run = async function({ api, event, args, Currencies }) {
     const { threadID, messageID, senderID } = event;
     const { readFileSync, writeFileSync } = require("fs-extra");
@@ -75,31 +68,8 @@ module.exports.run = async function({ api, event, args, Currencies }) {
     const timeIM = 12; 
 
     try {
-        // 🧩 Đọc lãi suất hiện tại
-        const rateData = JSON.parse(readFileSync(laisuatPath, "utf-8"));
-        const currentRate = rateData.rate;
-
-        // 🧩 ADMIN chỉnh lãi suất
-        if (args[0] === "laisuat") {
-            if (senderID !== adminID)
-                return api.sendMessage("❌ Bạn không có quyền chỉnh lãi suất.", threadID, messageID);
-
-            if (!args[1]) {
-                return api.sendMessage(`📊 Lãi suất hiện tại: ${(currentRate * 100).toFixed(2)}%`, threadID, messageID);
-            }
-
-            const newRate = parseFloat(args[1].replace("%", "")) / 100;
-            if (isNaN(newRate) || newRate < 0 || newRate > 1)
-                return api.sendMessage("⚠️ Lãi suất không hợp lệ (nhập ví dụ: /bank laisuat 10%)", threadID, messageID);
-
-            rateData.rate = newRate;
-            writeFileSync(laisuatPath, JSON.stringify(rateData, null, 2));
-            return api.sendMessage(`✅ Đã cập nhật lãi suất thành ${(newRate * 100).toFixed(2)}%`, threadID, messageID);
-        }
-
         let user = JSON.parse(readFileSync(pathData, "utf-8"));
 
-        // Đăng ký tài khoản
         if (args[0] == '-r' || args[0] == 'register') {
             if (!user.find(i => i.senderID == senderID)) {
                 const newUser = { senderID: senderID, money: "0", lastInterestTime: moment().toISOString() };
@@ -111,18 +81,16 @@ module.exports.run = async function({ api, event, args, Currencies }) {
             }
         }
 
-        // Kiểm tra tài khoản
         if (args[0] == 'check' || args[0] == 'coins') {
             if (!user.find(i => i.senderID == senderID)) {
                 return api.sendMessage(`[⚠️ WARNING] - Bạn chưa đăng kí sử dụng banking, ${global.config.PREFIX}${this.config.name} register để đăng kí🏦`, threadID, messageID);
             } else {
                 const userData = user.find(i => i.senderID == senderID);
                 const lastInterestTime = moment(userData.lastInterestTime).format('HH:mm:ss DD/MM/YYYY');
-                return api.sendMessage(`[ BANKING ]\n💰 Số tiền: ${formatNumber(userData.money)}$\n💷 Lãi: ${(currentRate * 100).toFixed(2)}% mỗi ${timeIM} giờ\n🕒 Lần cuối tính lãi: ${lastInterestTime}`, threadID, messageID);
+                return api.sendMessage(`[ BANKING ] - Số tiền bạn gửi MEO BEL BANK là: ${formatNumber(userData.money)}$\n💷 Lãi: 5% mỗi ${timeIM} giờ\n🕒 Lần cuối tính lãi: ${lastInterestTime}`, threadID, messageID);
             }
         }
 
-        // Gửi tiền
         if (args[0] == 'gửi' || args[0] == 'send') {
             if (!args[1] || isNaN(args[1])) return api.sendMessage("[❎ FAILED] - Số tiền gửi vào phải là một con số", threadID, messageID);
             if (!user.find(i => i.senderID == senderID)) {
@@ -138,11 +106,10 @@ module.exports.run = async function({ api, event, args, Currencies }) {
 
                 writeFileSync(pathData, JSON.stringify(user, null, 2));
                 await Currencies.decreaseMoney(senderID, Number(balance));
-                return api.sendMessage(`[ ✅ SUCCESS ] - Bạn vừa gửi ${formatNumber(balance)}$ vào MEO BEL BANK\n💷 Lãi: ${(currentRate * 100).toFixed(2)}% mỗi ${timeIM} giờ`, threadID, messageID);
+                return api.sendMessage(`[ ✅ SUCCESS ] - Bạn vừa gửi ${formatNumber(balance)}$ vào MEO BEL BANK\n💷 Lãi: 5% mỗi ${timeIM} giờ`, threadID, messageID);
             }
         }
 
-        // Rút tiền
         if (args[0] == 'rút' || args[0] == 'lấy') {
             if (!args[1] || isNaN(args[1])) return api.sendMessage("[⚠️ WARNING] - Vui lòng nhập số tiền 💰", threadID, messageID);
             if (!user.find(i => i.senderID == senderID)) {
@@ -158,29 +125,16 @@ module.exports.run = async function({ api, event, args, Currencies }) {
                 writeFileSync(pathData, JSON.stringify(user, null, 2));
                 return api.sendMessage(`[ BANKING ] - Rút thành công ${formatNumber(money)}$, số dư còn lại là ${formatNumber(userData.money)}$`, threadID, messageID);
             }
+        } else {
+            return api.sendMessage(`=====🏦MEO BEL BANK🏦=====\n\n${global.config.PREFIX}${this.config.name} register -> Đăng kí gửi tiền tại MEO BEL BANK💹\n${global.config.PREFIX}${this.config.name} check -> Xem số tiền trong MEO BEL BANK💳\n${global.config.PREFIX}${this.config.name} gửi 10000 -> Gửi tiền vào MEO BEL BANK💷\n${global.config.PREFIX}${this.config.name} rút 10000 -> Rút tiền từ MEO BEL BANK💰`, threadID, messageID);
         }
-
-        // Nếu không có tham số
-        else {
-            return api.sendMessage(
-                `=====🏦MEO BEL BANK🏦=====\n\n` +
-                `${global.config.PREFIX}${this.config.name} register → Đăng kí gửi tiền💹\n` +
-                `${global.config.PREFIX}${this.config.name} check → Xem số dư💳\n` +
-                `${global.config.PREFIX}${this.config.name} gửi 10000 → Gửi tiền💷\n` +
-                `${global.config.PREFIX}${this.config.name} rút 10000 → Rút tiền💰\n` +
-                `${global.config.PREFIX}${this.config.name} laisuat → Xem hoặc chỉnh lãi suất (admin)`,
-                threadID,
-                messageID
-            );
-        }
-
     } catch (e) {
         console.error(e);
         return api.sendMessage("[⚠️ ERROR] - Đã xảy ra lỗi trong quá trình thực hiện.", threadID, messageID);
     }
 };
 
-// ✅ Định dạng số
 function formatNumber(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    
 }

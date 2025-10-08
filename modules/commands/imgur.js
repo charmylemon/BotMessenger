@@ -1,16 +1,14 @@
-const imgur = require("imgur");
-const fs = require("fs-extra");
-const path = require("path");
 const axios = require("axios");
+const fs = require("fs-extra");
 const FormData = require("form-data");
-const { downloadFile } = require("../../utils/index");
+const imgur = require("imgur");
 
 module.exports.config = {
   name: "imgur",
-  version: "3.2.0",
+  version: "1.2.0",
   hasPermssion: 0,
-  credits: "mod + GPT-5",
-  description: "Upload ảnh lên Imgur, video lên Gofile (tự động direct link)",
+  credits: "ChatGPT (Imgur + Postimages fallback)",
+  description: "Upload ảnh hoặc video lên Imgur, nếu lỗi thì chuyển sang Postimages",
   commandCategory: "Công cụ",
   usages: "[reply ảnh hoặc video]",
   cooldowns: 5
@@ -19,58 +17,62 @@ module.exports.config = {
 module.exports.run = async ({ api, event }) => {
   const { threadID, type, messageReply, messageID } = event;
   const ClientID = "f20bdcf02b2f89e";
-  if (type !== "message_reply" || !messageReply.attachments?.length)
-    return api.sendMessage("Vui lòng reply ảnh hoặc video!", threadID, messageID);
-
   imgur.setClientId(ClientID);
-  const cacheDir = path.join(__dirname, "cache/gofile");
-  fs.ensureDirSync(cacheDir);
 
-  let msg = "";
+  if (type !== "message_reply" || !messageReply.attachments?.length)
+    return api.sendMessage("⚠️ Hãy reply vào **1 ảnh hoặc video** để upload!", threadID, messageID);
 
-  for (const [index, data] of messageReply.attachments.entries()) {
-    const { url, type } = data;
+  const links = [];
+
+  for (const att of messageReply.attachments) {
+    const type = att.type;
+    if (!["photo", "animated_image", "video"].includes(type)) continue;
+
+    const ext = type === "photo" ? "jpg" : type === "video" ? "mp4" : "gif";
+    const path = __dirname + `/cache/${Date.now()}.${ext}`;
 
     try {
-      // === ẢNH ===
-      if (type === "photo" || type === "animated_image") {
-        const upload = await imgur.uploadUrl(url);
-        const id = upload.id;
-        const ext = type === "animated_image" ? "gif" : "jpg";
-        msg += `📷 https://i.imgur.com/${id}.${ext}\n`;
+      // tải file tạm
+      const res = await axios.get(att.url, { responseType: "arraybuffer" });
+      fs.writeFileSync(path, res.data);
 
-      // === VIDEO (Gofile API mới) ===
-      } else if (type === "video") {
-        const tempPath = path.join(cacheDir, `video_${index}.mp4`);
-        await downloadFile(url, tempPath);
+      // --- Upload lên Imgur ---
+      try {
+        const uploaded = await imgur.uploadFile(path);
+        if (uploaded?.link) {
+          links.push(uploaded.link);
+          fs.unlinkSync(path);
+          continue;
+        }
+      } catch (err) {
+        console.log("⚠️ Imgur lỗi, chuyển sang Postimages:", err.message);
+      }
 
-        // Lấy server khả dụng
-        const getServer = await axios.get("https://api.gofile.io/servers");
-        const server = getServer.data.data.servers[0].name;
+      // --- Upload fallback qua Postimages ---
+      const form = new FormData();
+      form.append("file", fs.createReadStream(path));
+      form.append("format", "json");
+      const uploadPost = await axios.post("https://api.postimages.org/1/upload", form, {
+        headers: form.getHeaders()
+      });
 
-        // Upload lên Gofile
-        const form = new FormData();
-        form.append("file", fs.createReadStream(tempPath));
+      fs.unlinkSync(path);
 
-        const upload = await axios.post(`https://${server}.gofile.io/uploadFile`, form, {
-          headers: form.getHeaders()
-        });
-
-        if (upload.data.status !== "ok") throw new Error("Upload thất bại.");
-
-        const { fileId, directLink } = upload.data.data;
-        msg += `🎥 ${directLink || `https://gofile.io/d/${fileId}`}\n`;
-
-        fs.unlinkSync(tempPath);
-
+      if (uploadPost.data?.data?.direct_link) {
+        links.push(uploadPost.data.data.direct_link);
       } else {
-        msg += `⚠️ Không hỗ trợ loại tệp: ${type}\n`;
+        links.push("❌ Upload thất bại!");
       }
 
     } catch (err) {
-      msg += `❌ Lỗi upload ${type}: ${err.message}\n`;
+      console.error("❌ Upload toàn phần lỗi:", err.message);
+      if (fs.existsSync(path)) fs.unlinkSync(path);
+      links.push("❌ Upload thất bại!");
     }
   }
 
-  return api.sendMessage(msg || "Không thể upload file nào!", threadID, messageID);
+  if (links.length === 0)
+    return api.sendMessage("❌ Upload thất bại hoàn toàn!", threadID, messageID);
+  else
+    return api.sendMessage(links.join("\n"), threadID, messageID);
 };
