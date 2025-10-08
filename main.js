@@ -15,7 +15,8 @@ const listbuiltinModules = require("module").builtinModules;
 
 global.client = new Object({
     commands: new Map(),
-     cooldowns: new Map(),
+    events: new Map(),
+    cooldowns: new Map(),
     eventRegistered: new Array(),
     handleSchedule: new Array(),
     handleReaction: new Array(),
