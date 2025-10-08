@@ -30,7 +30,7 @@
         "ban": 0,
         "bangtuanhoan": 0,
         "bank": 0,
-        "bankql": 0,
+        "bankql": 1,
         "bantho": 0,
         "banuser": 0,
         "baucua": 0,
@@ -426,7 +426,7 @@
         "adminin4": 0,
         "phatloc": 11,
         "bietdanh": 4,
-        "bankql": 5
+        "bankql": 6
     },
     "total": {
         "777": 0,
@@ -641,7 +641,7 @@
         "adminin4": 0,
         "phatloc": 11,
         "bietdanh": 4,
-        "bankql": 5
+        "bankql": 6
     },
     "lastUpdateDay": "2025-10-08",
     "lastUpdateWeek": "2025-10-06"
