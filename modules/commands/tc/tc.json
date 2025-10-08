@@ -10,7 +10,7 @@
         "afk": 0,
         "age": 0,
         "allfile": 0,
-        "anime": 0,
+        "anime": 1,
         "animev1": 0,
         "antiout": 0,
         "antispam": 0,
@@ -215,7 +215,7 @@
         "afk": 0,
         "age": 0,
         "allfile": 0,
-        "anime": 0,
+        "anime": 1,
         "animev1": 0,
         "antiout": 0,
         "antispam": 0,
@@ -414,7 +414,7 @@
         "afk": 0,
         "age": 0,
         "allfile": 0,
-        "anime": 15,
+        "anime": 16,
         "animev1": 0,
         "antiout": 0,
         "antispam": 0,
@@ -605,6 +605,6 @@
         "uplink": 8,
         "upanh": 2
     },
-    "lastUpdateDay": "2025-10-05",
-    "lastUpdateWeek": "2025-09-29"
+    "lastUpdateDay": "2025-10-08",
+    "lastUpdateWeek": "2025-10-06"
 }
