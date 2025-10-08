@@ -20,7 +20,7 @@ module.exports.run = async({ api, event, Currencies }) => {
 
   // Danh sách ảnh demo (bạn có thể thay link khác vào)
   var link = [
-    "https://i.imgur.com/T5BPkRG.jpg",
+    /*"https://i.imgur.com/T5BPkRG.jpg",
     "https://i.imgur.com/69MT3Wg.jpg",
     "https://i.imgur.com/z6EtvVm.jpg",
     "https://i.imgur.com/hf3KluZ.jpg",
@@ -219,7 +219,7 @@ module.exports.run = async({ api, event, Currencies }) => {
     "https://i.imgur.com/MaZDuQZ.jpg",
     "https://i.imgur.com/OGPnfjh.jpg",
     "https://i.imgur.com/1PZNFCw.jpg",
-    "https://i.imgur.com/ZAQpg2f.jpg",
+    "https://i.imgur.com/ZAQpg2f.jpg",*/
     "https://i.postimg.cc/wTJNSC1G/E-B9ea-WQAAst-Yg.jpg",
     "https://i.postimg.cc/sgrWyTSD/E-B9eb-AWUAINyt-B.jpg",
     "https://i.postimg.cc/TYcj48LJ/E02i-P-q-XIAE62tu.jpg",

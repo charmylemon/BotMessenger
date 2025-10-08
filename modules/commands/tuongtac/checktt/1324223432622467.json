@@ -6,31 +6,31 @@
         },
         {
             "id": "61569930369490",
-            "count": 14
+            "count": 19
         },
         {
             "id": "100026789808908",
-            "count": 754
+            "count": 783
         },
         {
             "id": "100034330461480",
-            "count": 148
+            "count": 174
         },
         {
             "id": "100040908473851",
-            "count": 164
+            "count": 208
         },
         {
             "id": "100056276350068",
-            "count": 346
+            "count": 392
         },
         {
             "id": "100081172074454",
-            "count": 635
+            "count": 747
         },
         {
             "id": "100073763397566",
-            "count": 4
+            "count": 13
         }
     ],
     "week": [
@@ -41,37 +41,37 @@
         },
         {
             "id": "61569930369490",
-            "count": 9,
+            "count": 14,
             "name": "Phạm Tiến"
         },
         {
             "id": "100026789808908",
-            "count": 624,
+            "count": 653,
             "name": "Dương Anh Vũ"
         },
         {
             "id": "100034330461480",
-            "count": 123,
+            "count": 149,
             "name": "Nam Lưu"
         },
         {
             "id": "100040908473851",
-            "count": 107,
+            "count": 151,
             "name": "Trung Kiên"
         },
         {
             "id": "100056276350068",
-            "count": 342,
+            "count": 388,
             "name": "Lê Minh Hoàng"
         },
         {
             "id": "100081172074454",
-            "count": 502,
+            "count": 614,
             "name": "Nguyễn Trần Anh Khoa"
         },
         {
             "id": "100073763397566",
-            "count": 4
+            "count": 13
         }
     ],
     "day": [
@@ -82,37 +82,37 @@
         },
         {
             "id": "61569930369490",
-            "count": 6,
+            "count": 11,
             "name": "Phạm Tiến"
         },
         {
             "id": "100026789808908",
-            "count": 17,
+            "count": 46,
             "name": "Dương Anh Vũ"
         },
         {
             "id": "100034330461480",
-            "count": 10,
+            "count": 36,
             "name": "Nam Lưu"
         },
         {
             "id": "100040908473851",
-            "count": 24,
+            "count": 68,
             "name": "Trung Kiên"
         },
         {
             "id": "100056276350068",
-            "count": 1,
+            "count": 47,
             "name": "Lê Minh Hoàng"
         },
         {
             "id": "100081172074454",
-            "count": 48,
+            "count": 160,
             "name": "Nguyễn Trần Anh Khoa"
         },
         {
             "id": "100073763397566",
-            "count": 4
+            "count": 13
         }
     ],
     "time": 3
