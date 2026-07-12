@@ -2,8 +2,8 @@ module.exports.config = {
   name: "gái",
   version: "2.0.0",
   hasPermssion: 0,
-  credits: "Vtuan - mod by ChatGPT",
-  description: "Xem ảnh gái (trừ 10.000)",
+  credits: "Vtuan - mod by charmylemon",
+  description: "Xem ảnh gái (trừ 100.000.000)",
   commandCategory: "Random-img",
   usages: "/gai",
   cooldowns: 30
@@ -17,10 +17,10 @@ module.exports.run = async ({ api, event, Currencies }) => {
 
   // Check tiền người dùng
   const userMoney = (await Currencies.getData(event.senderID)).money;
-  if (userMoney < 10000) {
-    return api.sendMessage("⚠️ Bạn không đủ 10.000 để xem ảnh gái!", event.threadID, event.messageID);
+  if (userMoney < 100000000) {
+    return api.sendMessage("⚠️ Bạn không đủ 100,000,000 để xem ảnh gái!", event.threadID, event.messageID);
   }
-  await Currencies.setData(event.senderID, { money: userMoney - 10000 });
+  await Currencies.setData(event.senderID, { money: userMoney - 100000000 });
 
   // Random 4 ảnh
   var image1 = girl[Math.floor(Math.random() * girl.length)].trim();
@@ -34,7 +34,7 @@ module.exports.run = async ({ api, event, Currencies }) => {
 
   let callback = function () {
     return api.sendMessage({
-      body: `😍 Ghẹ đẹp:3\n💸 Đã trừ 10.000\n💰 Số dư còn lại: ${(userMoney - 10000).toLocaleString()} VNĐ`,
+      body: `😍 Ghẹ đẹp:3\n💸 Đã trừ 100.000.000\n💰 Số dư còn lại: ${(userMoney - 100000000).toLocaleString()} VNĐ`,
       attachment: [
         fs.createReadStream(__dirname + `/1.png`),
         fs.createReadStream(__dirname + `/2.png`),

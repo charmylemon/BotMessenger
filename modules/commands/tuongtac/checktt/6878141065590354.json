@@ -30,7 +30,7 @@
         },
         {
             "id": "100041059720617",
-            "count": 0
+            "count": 3
         },
         {
             "id": "100041392231283",
@@ -38,7 +38,7 @@
         },
         {
             "id": "100043166252172",
-            "count": 0
+            "count": 1
         },
         {
             "id": "100044208033668",
@@ -74,7 +74,7 @@
         },
         {
             "id": "100057146651451",
-            "count": 9
+            "count": 11
         },
         {
             "id": "100060110503292",
@@ -94,7 +94,7 @@
         },
         {
             "id": "100066898373327",
-            "count": 0
+            "count": 1
         },
         {
             "id": "100069106740734",
@@ -110,7 +110,7 @@
         },
         {
             "id": "100072018729179",
-            "count": 0
+            "count": 4
         },
         {
             "id": "100072777112669",
@@ -126,7 +126,7 @@
         },
         {
             "id": "100074066027382",
-            "count": 0
+            "count": 4
         },
         {
             "id": "100076243905613",
@@ -154,10 +154,6 @@
         },
         {
             "id": "100085062492963",
-            "count": 0
-        },
-        {
-            "id": "100086207643205",
             "count": 0
         },
         {
@@ -180,358 +176,436 @@
     "week": [
         {
             "id": "61552832253320",
-            "count": 0
+            "count": 0,
+            "name": "Hoàng Mạnh"
         },
         {
             "id": "61566187264528",
-            "count": 0
+            "count": 0,
+            "name": "Kiba Yuji"
         },
         {
             "id": "100027662621613",
-            "count": 0
+            "count": 0,
+            "name": "Độ Nguyễn"
         },
         {
             "id": "100028089210358",
-            "count": 0
+            "count": 0,
+            "name": "Người dùng facebook"
         },
         {
             "id": "100030483672340",
-            "count": 0
+            "count": 0,
+            "name": "Lâm Tiền Tỷ Đỉnh"
         },
         {
             "id": "100035954983111",
-            "count": 0
+            "count": 0,
+            "name": "Nguyễn Minh Quân"
         },
         {
             "id": "100037576127912",
-            "count": 0
+            "count": 0,
+            "name": "Ruga Rider"
         },
         {
             "id": "100041059720617",
-            "count": 0
+            "count": 0,
+            "name": "Huỳnh Trung Kiên"
         },
         {
             "id": "100041392231283",
-            "count": 0
+            "count": 0,
+            "name": "Kh Gia Huy"
         },
         {
             "id": "100043166252172",
-            "count": 0
+            "count": 0,
+            "name": "Nguyễn Văn Pate"
         },
         {
             "id": "100044208033668",
-            "count": 0
+            "count": 0,
+            "name": "Hải Hùng"
         },
         {
             "id": "100046004911124",
-            "count": 0
+            "count": 0,
+            "name": "Trần Thị Ninh Gà"
         },
         {
             "id": "100049947921913",
-            "count": 0
+            "count": 0,
+            "name": "Người dùng facebook"
         },
         {
             "id": "100052363902958",
-            "count": 0
+            "count": 0,
+            "name": "Thành An"
         },
         {
             "id": "100052886661964",
-            "count": 0
+            "count": 0,
+            "name": "Thanh Tuấn"
         },
         {
             "id": "100054964300684",
-            "count": 0
+            "count": 0,
+            "name": "Thu Phuongg"
         },
         {
             "id": "100055460150198",
-            "count": 0
+            "count": 0,
+            "name": "Tomioku Rahatake"
         },
         {
             "id": "100056276350068",
-            "count": 0
+            "count": 0,
+            "name": "Lê Minh Hoàng"
         },
         {
             "id": "100057146651451",
-            "count": 9
+            "count": 0,
+            "name": "Trần Đức"
         },
         {
             "id": "100060110503292",
-            "count": 0
+            "count": 0,
+            "name": "Toàn Phong"
         },
         {
             "id": "100061312805508",
-            "count": 0
+            "count": 0,
+            "name": "Nguyễn Trường Phước"
         },
         {
             "id": "100061980369378",
-            "count": 0
+            "count": 0,
+            "name": "Kadota Kurosaki"
         },
         {
             "id": "100063713726595",
-            "count": 0
+            "count": 0,
+            "name": "Nguyễn Bình"
         },
         {
             "id": "100066898373327",
-            "count": 0
+            "count": 0,
+            "name": "Minh Đức"
         },
         {
             "id": "100069106740734",
-            "count": 0
+            "count": 0,
+            "name": "Royal Tài"
         },
         {
             "id": "100069556006011",
-            "count": 0
+            "count": 0,
+            "name": "Nguyễn Quốc Khánh"
         },
         {
             "id": "100070596751869",
-            "count": 0
+            "count": 0,
+            "name": "Hoàng Mạnh"
         },
         {
             "id": "100072018729179",
-            "count": 0
+            "count": 0,
+            "name": "Hải Đăng"
         },
         {
             "id": "100072777112669",
-            "count": 0
+            "count": 0,
+            "name": "Kagura Blazar"
         },
         {
             "id": "100072955929144",
-            "count": 0
+            "count": 0,
+            "name": "Đỗ Đăng"
         },
         {
             "id": "100073763397566",
-            "count": 0
+            "count": 0,
+            "name": "Người Tình Mùa Đông"
         },
         {
             "id": "100074066027382",
-            "count": 0
+            "count": 0,
+            "name": "Osakur Kasuga"
         },
         {
             "id": "100076243905613",
-            "count": 0
+            "count": 0,
+            "name": "Chien Tran"
         },
         {
             "id": "100078289241018",
-            "count": 0
+            "count": 0,
+            "name": "Nguyen D Tuan Anh"
         },
         {
             "id": "100079545407866",
-            "count": 0
+            "count": 0,
+            "name": "Hoàng Anha"
         },
         {
             "id": "100079906295728",
-            "count": 0
+            "count": 0,
+            "name": "TrVan Zein Meomeoz"
         },
         {
             "id": "100080937138854",
-            "count": 0
+            "count": 0,
+            "name": "Bùi Thiện"
         },
         {
             "id": "100082729746588",
-            "count": 0
+            "count": 0,
+            "name": "Albert Westchurch"
         },
         {
             "id": "100085062492963",
-            "count": 0
-        },
-        {
-            "id": "100086207643205",
-            "count": 0
+            "count": 0,
+            "name": "Dưa Muối"
         },
         {
             "id": "100087449667909",
-            "count": 0
+            "count": 0,
+            "name": "Huy Hyn"
         },
         {
             "id": "100088961208393",
-            "count": 0
+            "count": 0,
+            "name": "Người dùng facebook"
         },
         {
             "id": "100094394268867",
-            "count": 0
+            "count": 0,
+            "name": "Phúc Có Waifu"
         },
         {
             "id": "100094724118800",
-            "count": 4
+            "count": 0,
+            "name": "Immortal Justice"
         }
     ],
     "day": [
         {
             "id": "61552832253320",
-            "count": 0
+            "count": 0,
+            "name": "Hoàng Mạnh"
         },
         {
             "id": "61566187264528",
-            "count": 0
+            "count": 0,
+            "name": "Kiba Yuji"
         },
         {
             "id": "100027662621613",
-            "count": 0
+            "count": 0,
+            "name": "Độ Nguyễn"
         },
         {
             "id": "100028089210358",
-            "count": 0
+            "count": 0,
+            "name": "Người dùng facebook"
         },
         {
             "id": "100030483672340",
-            "count": 0
+            "count": 0,
+            "name": "Lâm Tiền Tỷ Đỉnh"
         },
         {
             "id": "100035954983111",
-            "count": 0
+            "count": 0,
+            "name": "Nguyễn Minh Quân"
         },
         {
             "id": "100037576127912",
-            "count": 0
+            "count": 0,
+            "name": "Ruga Rider"
         },
         {
             "id": "100041059720617",
-            "count": 0
+            "count": 0,
+            "name": "Huỳnh Trung Kiên"
         },
         {
             "id": "100041392231283",
-            "count": 0
+            "count": 0,
+            "name": "Kh Gia Huy"
         },
         {
             "id": "100043166252172",
-            "count": 0
+            "count": 0,
+            "name": "Nguyễn Văn Pate"
         },
         {
             "id": "100044208033668",
-            "count": 0
+            "count": 0,
+            "name": "Hải Hùng"
         },
         {
             "id": "100046004911124",
-            "count": 0
+            "count": 0,
+            "name": "Trần Thị Ninh Gà"
         },
         {
             "id": "100049947921913",
-            "count": 0
+            "count": 0,
+            "name": "Người dùng facebook"
         },
         {
             "id": "100052363902958",
-            "count": 0
+            "count": 0,
+            "name": "Thành An"
         },
         {
             "id": "100052886661964",
-            "count": 0
+            "count": 0,
+            "name": "Thanh Tuấn"
         },
         {
             "id": "100054964300684",
-            "count": 0
+            "count": 0,
+            "name": "Thu Phuongg"
         },
         {
             "id": "100055460150198",
-            "count": 0
+            "count": 0,
+            "name": "Tomioku Rahatake"
         },
         {
             "id": "100056276350068",
-            "count": 0
+            "count": 0,
+            "name": "Lê Minh Hoàng"
         },
         {
             "id": "100057146651451",
-            "count": 9
+            "count": 0,
+            "name": "Trần Đức"
         },
         {
             "id": "100060110503292",
-            "count": 0
+            "count": 0,
+            "name": "Toàn Phong"
         },
         {
             "id": "100061312805508",
-            "count": 0
+            "count": 0,
+            "name": "Nguyễn Trường Phước"
         },
         {
             "id": "100061980369378",
-            "count": 0
+            "count": 0,
+            "name": "Kadota Kurosaki"
         },
         {
             "id": "100063713726595",
-            "count": 0
+            "count": 0,
+            "name": "Nguyễn Bình"
         },
         {
             "id": "100066898373327",
-            "count": 0
+            "count": 0,
+            "name": "Minh Đức"
         },
         {
             "id": "100069106740734",
-            "count": 0
+            "count": 0,
+            "name": "Royal Tài"
         },
         {
             "id": "100069556006011",
-            "count": 0
+            "count": 0,
+            "name": "Nguyễn Quốc Khánh"
         },
         {
             "id": "100070596751869",
-            "count": 0
+            "count": 0,
+            "name": "Hoàng Mạnh"
         },
         {
             "id": "100072018729179",
-            "count": 0
+            "count": 0,
+            "name": "Hải Đăng"
         },
         {
             "id": "100072777112669",
-            "count": 0
+            "count": 0,
+            "name": "Kagura Blazar"
         },
         {
             "id": "100072955929144",
-            "count": 0
+            "count": 0,
+            "name": "Đỗ Đăng"
         },
         {
             "id": "100073763397566",
-            "count": 0
+            "count": 0,
+            "name": "Người Tình Mùa Đông"
         },
         {
             "id": "100074066027382",
-            "count": 0
+            "count": 0,
+            "name": "Osakur Kasuga"
         },
         {
             "id": "100076243905613",
-            "count": 0
+            "count": 0,
+            "name": "Chien Tran"
         },
         {
             "id": "100078289241018",
-            "count": 0
+            "count": 0,
+            "name": "Nguyen D Tuan Anh"
         },
         {
             "id": "100079545407866",
-            "count": 0
+            "count": 0,
+            "name": "Hoàng Anha"
         },
         {
             "id": "100079906295728",
-            "count": 0
+            "count": 0,
+            "name": "TrVan Zein Meomeoz"
         },
         {
             "id": "100080937138854",
-            "count": 0
+            "count": 0,
+            "name": "Bùi Thiện"
         },
         {
             "id": "100082729746588",
-            "count": 0
+            "count": 0,
+            "name": "Albert Westchurch"
         },
         {
             "id": "100085062492963",
-            "count": 0
-        },
-        {
-            "id": "100086207643205",
-            "count": 0
+            "count": 0,
+            "name": "Dưa Muối"
         },
         {
             "id": "100087449667909",
-            "count": 0
+            "count": 0,
+            "name": "Huy Hyn"
         },
         {
             "id": "100088961208393",
-            "count": 0
+            "count": 0,
+            "name": "Người dùng facebook"
         },
         {
             "id": "100094394268867",
-            "count": 0
+            "count": 0,
+            "name": "Phúc Có Waifu"
         },
         {
             "id": "100094724118800",
-            "count": 4
+            "count": 0,
+            "name": "Immortal Justice"
         }
     ],
-    "time": 3
+    "time": 5
 }

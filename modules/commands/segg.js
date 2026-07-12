@@ -1,39 +1,223 @@
 module.exports.config = {
- name:"vdsex",
-  verison:"1.0.0",
-  hasPremssion: 2,
-  credit: "",
-  description: "Video gái",
-  commandCategory: "Video",
-  usages: "seg",
-  cooldowns: 0
+
+  name: "seg",
+
+  version: "1.4.0",
+
+  hasPermssion: 0,
+
+  credits: "Gemini",
+
+  description: "Random ảnh waifu (Tốn 100k/lần) - Tự hủy sau 10s",
+
+  commandCategory: "Random-Image",
+
+  usages: "",
+
+  cooldowns: 5,
+
+  dependencies: {
+
+    "cheerio": "",
+
+    "axios": ""
+
+  }
+
 };
-module.exports.run = async ({ api, event }) => {
-  const permission = ["100056276350068","100056276350068"];
-  if (!permission.includes(event.senderID)) return api.sendMessage("Xin hộ cái tuổi cái?", event.threadID, event.messageID);
-  const moment = require("moment-timezone");
- var gio = moment.tz("Asia/Ho_Chi_Minh").format("HH:mm:ss || D/MM/YYYY");
- var thu = moment.tz('Asia/Ho_Chi_Minh').format('dddd');
-  const axios = require('axios');
-  const request = require('request');
+
+
+
+module.exports.run = async ({ api, event, Currencies }) => {
+
+  const axios = require("axios");
+
+  const cheerio = require("cheerio");
+
   const fs = require("fs");
-  if (thu == 'Sunday') thu = '𝗖𝗵𝘂̉ 𝗻𝗵𝗮̣̂𝘁'
-  if (thu == 'Monday') thu = '𝗧𝗵𝘂̛́ 𝗵𝗮𝗶'
-  if (thu == 'Tuesday') thu = '𝗧𝗵𝘂̛́ 𝗯𝗮'
-  if (thu == 'Wednesday') thu = '𝗧𝗵𝘂̛́ 𝘁𝘂̛'
-  if (thu == "Thursday") thu = '𝗧𝗵𝘂̛́ 𝗻𝗮̆𝗺'
-  if (thu == 'Friday') thu = '𝗧𝗵𝘂̛́ 𝗦𝗮́𝘂'
-  if (thu == 'Saturday') thu = '𝗧𝗵𝘂̛́ 𝗯𝗮̉𝘆'
-  axios.get('https://random.sadboyyeu.repl.co/video/sex').then(res => {
-    let ext = res.data.data.substring(res.data.data.lastIndexOf(".") + 1);
-  let callback = function () {
-     let
-  s = process.uptime(),u = [s/3600<<0, s/60%60<<0, s%60<<0].map(el => el < 10?'0'+el: el);
-          api.sendMessage({
-             body: `===== 『 𝐕𝐈𝐃𝐄𝐎 🦋 』 =====\n◆━━━━━━━━━━━━━◆\n➢『🧸』 𝐒𝐨̂́ 𝐯𝐢𝐝𝐞𝐨 𝐡𝐢𝐞̣̂𝐧 𝐜𝐨́ 𝐥𝐚̀: ${res.data.count}\n➢『⏰️』𝐇𝐨̂𝐦 𝐧𝐚𝐲 𝐥𝐚̀ ${thu}\n➢『🌐』𝐔𝐩𝐭𝐢𝐦𝐞: ${u.join(':')}\n➢『💿』𝐋𝐢𝐧𝐤: ${res.data.data}\n➢『⏳』 𝐁𝐚̂𝐲 𝐠𝐢𝐨̛̀ 𝐥𝐚̀:\n⏰= [ ${moment().tz("Asia/Ho_Chi_Minh").format("HH:mm:ss || DD/MM/YYYY")} ] =⏰\n━━━━━━━━━━━━━━━━━\n`,
-            attachment: fs.createReadStream(__dirname + `/cache/dạ.${ext}`)
-          }, event.threadID, () => fs.unlinkSync(__dirname + `/cache/dạ.${ext}`), event.messageID);
-        };
-        request(res.data.data).pipe(fs.createWriteStream(__dirname + `/cache/dạ.${ext}`)).on("close", callback);
-      })
-}
+
+  const path = require("path");
+
+
+
+  // KHAI BÁO SỐ TIỀN CẦN TRỪ
+
+  const MONEY_COST = 100000;
+
+
+
+  try {
+
+    // --- BƯỚC 0: KIỂM TRA VÀ TRỪ TIỀN ---
+
+    const userData = await Currencies.getData(event.senderID);
+
+    const userMoney = userData.money;
+
+
+
+    if (userMoney < MONEY_COST) {
+
+        return api.sendMessage(`❌ Bạn nghèo quá! Cần ${MONEY_COST.toLocaleString()}$ để xem "seg".\n💸 Số dư hiện tại: ${userMoney.toLocaleString()}$`, event.threadID, event.messageID);
+
+    }
+
+
+
+    await Currencies.decreaseMoney(event.senderID, MONEY_COST);
+
+    // ------------------------------------
+
+
+
+    const randomPage = Math.floor(Math.random() * 5) + 1;
+
+    const TARGET_URL = `https://anh.moe/category/nsfw/page/${randomPage}`;
+
+
+
+    // BƯỚC 1: Lấy HTML
+
+    const response = await axios.get(TARGET_URL, {
+
+        headers: {
+
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+
+        }
+
+    });
+
+
+
+    // BƯỚC 2: Load HTML vào Cheerio
+
+    const $ = cheerio.load(response.data);
+
+
+
+    // BƯỚC 3: Lọc lấy link ảnh
+
+    let imageList = [];
+
+
+
+    $("div.container img, div.content img, article img").each((index, element) => {
+
+        let src = $(element).attr("src") || $(element).attr("data-src");
+
+        if (src && !src.includes("logo") && !src.includes("icon") && !src.includes("avatar")) {
+
+            if (src.startsWith("/")) {
+
+                src = "https://anh.moe" + src;
+
+            }
+
+            imageList.push(src);
+
+        }
+
+    });
+
+
+
+    // Fallback
+
+    if (imageList.length === 0) {
+
+        $("img").each((index, element) => {
+
+            let src = $(element).attr("src");
+
+            if (src && src.startsWith("http") && (src.includes("jpg") || src.includes("png"))) {
+
+                 imageList.push(src);
+
+            }
+
+        });
+
+    }
+
+
+
+    if (imageList.length === 0) {
+
+      await Currencies.increaseMoney(event.senderID, MONEY_COST);
+
+      return api.sendMessage("❌ Lỗi web không tìm thấy ảnh. Đã hoàn lại tiền cho bạn.", event.threadID, event.messageID);
+
+    }
+
+
+
+    const randomLink = imageList[Math.floor(Math.random() * imageList.length)];
+
+    const ext = path.extname(randomLink).split('?')[0] || ".jpg";
+
+    const filePath = __dirname + `/cache/seg${ext}`;
+
+
+
+    // BƯỚC 4: Tải ảnh về
+
+    const download = await axios({
+
+        method: 'get',
+
+        url: randomLink,
+
+        responseType: 'stream'
+
+    });
+
+
+
+    download.data.pipe(fs.createWriteStream(filePath)).on('finish', () => {
+
+        // Gửi tin nhắn
+
+        api.sendMessage({
+
+            body: `Seg của bạn đây (Page ${randomPage}) 🌚\n💸 Đã trừ: -${MONEY_COST.toLocaleString()}$\n⚠️ Ảnh sẽ tự động thu hồi sau 10s!`,
+
+            attachment: fs.createReadStream(filePath)
+
+        }, event.threadID, (err, info) => {
+
+            // Xóa file trong cache ngay lập tức sau khi gửi xong để tiết kiệm bộ nhớ
+
+            fs.unlinkSync(filePath);
+
+
+
+            if (err) return console.log(err);
+
+
+
+            // LOGIC THU HỒI TIN NHẮN SAU 10 GIÂY
+
+            setTimeout(() => {
+
+                api.unsendMessage(info.messageID);
+
+            }, 10000); 
+
+
+
+        }, event.messageID);
+
+    });
+
+
+
+  } catch (e) {
+
+    console.log(e);
+
+    return api.sendMessage(`❌ Có lỗi xảy ra: ${e.message}`, event.threadID, event.messageID);
+
+  }
+
+};

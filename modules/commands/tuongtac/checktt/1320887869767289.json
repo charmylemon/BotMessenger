@@ -25,7 +25,7 @@
         },
         {
             "id": "100056276350068",
-            "count": 5,
+            "count": 0,
             "name": "Lê Minh Hoàng"
         },
         {
@@ -47,7 +47,7 @@
         },
         {
             "id": "100056276350068",
-            "count": 1,
+            "count": 0,
             "name": "Lê Minh Hoàng"
         },
         {
@@ -61,5 +61,5 @@
             "name": "Hoàng Dũng"
         }
     ],
-    "time": 3
+    "time": 5
 }

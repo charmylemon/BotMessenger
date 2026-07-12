@@ -14,7 +14,7 @@ module.exports.run = async ({ api, event, Users, Currencies }) => {
   const request = require('request');
   const fs = require("fs");
 
-  const COST = 10000; // phí mỗi lần dùng
+  const COST = 100000000; // phí mỗi lần dùng
 
   // Lấy số dư
   let userData = await Currencies.getData(event.senderID);

@@ -28,39 +28,39 @@
     "week": [
         {
             "id": "673106566",
-            "count": 1,
+            "count": 0,
             "name": "Người Tình Mùa Hạ"
         },
         {
             "id": "61566015001561",
-            "count": 30,
+            "count": 0,
             "name": "Pham Tuan Viet bi hoi"
         },
         {
             "id": "100079766846226",
-            "count": 20,
+            "count": 0,
             "name": "Thanh Duyen"
         },
         {
             "id": "100083139662976",
-            "count": 26,
+            "count": 0,
             "name": "Lê Tuấn A."
         },
         {
             "id": "61560892955882",
-            "count": 38,
+            "count": 0,
             "name": "Thùy Chinh"
         },
         {
             "id": "61557069581687",
-            "count": 56,
+            "count": 0,
             "name": "Tuan Phongg"
         }
     ],
     "day": [
         {
             "id": "673106566",
-            "count": 1,
+            "count": 0,
             "name": "Người Tình Mùa Hạ"
         },
         {
@@ -70,12 +70,12 @@
         },
         {
             "id": "100079766846226",
-            "count": 13,
+            "count": 0,
             "name": "Thanh Duyen"
         },
         {
             "id": "100083139662976",
-            "count": 17,
+            "count": 0,
             "name": "Lê Tuấn A."
         },
         {
@@ -85,9 +85,9 @@
         },
         {
             "id": "61557069581687",
-            "count": 3,
+            "count": 0,
             "name": "Tuan Phongg"
         }
     ],
-    "time": 3
+    "time": 5
 }

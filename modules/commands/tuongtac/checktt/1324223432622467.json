@@ -6,72 +6,81 @@
         },
         {
             "id": "61569930369490",
-            "count": 14
-        },
-        {
-            "id": "100026789808908",
-            "count": 754
+            "count": 31
         },
         {
             "id": "100034330461480",
-            "count": 148
+            "count": 245
         },
         {
             "id": "100040908473851",
-            "count": 164
+            "count": 611
         },
         {
             "id": "100056276350068",
-            "count": 346
+            "count": 655
         },
         {
             "id": "100081172074454",
-            "count": 635
+            "count": 1028
         },
         {
             "id": "100073763397566",
-            "count": 4
+            "count": 103
+        },
+        {
+            "id": "100076620961477",
+            "count": 272
+        },
+        {
+            "id": "61584048143069",
+            "count": 71
         }
     ],
     "week": [
         {
             "id": "673106566",
-            "count": 174,
+            "count": 0,
             "name": "Người Tình Mùa Hạ"
         },
         {
             "id": "61569930369490",
-            "count": 9,
+            "count": 0,
             "name": "Phạm Tiến"
         },
         {
-            "id": "100026789808908",
-            "count": 624,
-            "name": "Dương Anh Vũ"
-        },
-        {
             "id": "100034330461480",
-            "count": 123,
+            "count": 9,
             "name": "Nam Lưu"
         },
         {
             "id": "100040908473851",
-            "count": 107,
+            "count": 65,
             "name": "Trung Kiên"
         },
         {
             "id": "100056276350068",
-            "count": 342,
+            "count": 170,
             "name": "Lê Minh Hoàng"
         },
         {
             "id": "100081172074454",
-            "count": 502,
+            "count": 12,
             "name": "Nguyễn Trần Anh Khoa"
         },
         {
             "id": "100073763397566",
-            "count": 4
+            "count": 0,
+            "name": "Người Tình Mùa Đông"
+        },
+        {
+            "id": "100076620961477",
+            "count": 37,
+            "name": "Quyn Linhh"
+        },
+        {
+            "id": "61584048143069",
+            "count": 71
         }
     ],
     "day": [
@@ -82,38 +91,44 @@
         },
         {
             "id": "61569930369490",
-            "count": 6,
+            "count": 0,
             "name": "Phạm Tiến"
         },
         {
-            "id": "100026789808908",
-            "count": 17,
-            "name": "Dương Anh Vũ"
-        },
-        {
             "id": "100034330461480",
-            "count": 10,
+            "count": 0,
             "name": "Nam Lưu"
         },
         {
             "id": "100040908473851",
-            "count": 24,
+            "count": 0,
             "name": "Trung Kiên"
         },
         {
             "id": "100056276350068",
-            "count": 1,
+            "count": 0,
             "name": "Lê Minh Hoàng"
         },
         {
             "id": "100081172074454",
-            "count": 48,
+            "count": 0,
             "name": "Nguyễn Trần Anh Khoa"
         },
         {
             "id": "100073763397566",
-            "count": 4
+            "count": 0,
+            "name": "Người Tình Mùa Đông"
+        },
+        {
+            "id": "100076620961477",
+            "count": 0,
+            "name": "Quyn Linhh"
+        },
+        {
+            "id": "61584048143069",
+            "count": 0,
+            "name": "Phạm Huy"
         }
     ],
-    "time": 3
+    "time": 5
 }

@@ -420,7 +420,7 @@
   var money = data.money;
 
   // số tiền phải trả = 1 tỷ
-  const cost = 1000000000;
+  const cost = 10000000000;
 
   if (money < cost) {
     api.sendMessage(`Bạn cần ${cost.toLocaleString()} đô để xem ảnh 😿`, event.threadID, event.messageID);
